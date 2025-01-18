@@ -1,4 +1,4 @@
-from resumaker.utils import load_config
+from resumaker.utils import load_config, get_config
 import pytest
 import os
 
@@ -19,14 +19,13 @@ def create_valid_config_file():
     f.close()
 
 def test_config_file_does_not_exist(delete_config_file):
-    with pytest.raises(SystemExit) as exc:
-        load_config()
-    assert exc.value.code == "config.yml can't be found!"
+    config = load_config()
+    assert config == {}
 
 def test_config_file_exists_but_invalid(create_invalid_config_file):
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(SystemExit) as exc:
         load_config()
-    assert str(exc.value) == "config.yml is not valid"
+    assert str(exc.value) == "config.yml is not valid."
 
 def test_config_file_exists_and_valid(create_valid_config_file):
     config = load_config()
