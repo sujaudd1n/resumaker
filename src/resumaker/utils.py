@@ -4,14 +4,13 @@ import yaml
 
 CONFIG_FILENAME = "config.yml"
 
-default_configs = {
-    "RESUME_YAML_FILENAME": ["resume.yml", "resume.yaml"]
-}
+default_configs = {"RESUME_YAML_FILENAME": ["resume.yml", "resume.yaml"]}
+
 
 def load_config():
     """Load config data by reading config.yml
-       If config.yml is valid (a dict), it return it.
-       else sys.exit
+    If config.yml is valid (a dict), it return it.
+    else sys.exit
     """
     try:
         with open(CONFIG_FILENAME) as f:
@@ -21,10 +20,11 @@ def load_config():
             return config
     except FileNotFoundError:
         return {}
-        
+
+
 def get_config():
     """Return config data by overwriting default_configs
-       by reading config.yml 
+    by reading config.yml
     """
     user_configs = load_config()
     for config in user_configs:

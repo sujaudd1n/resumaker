@@ -1,6 +1,7 @@
 import yaml
 import sys
 
+
 def get_pydict_from_yamls(filenames):
     if type(filenames) != list:
         filenames = [filenames]
@@ -14,6 +15,7 @@ def get_pydict_from_yamls(filenames):
         else:
             return pydict
     sys.exit(f"{filenames} not found!")
+
 
 def yamlfile_to_pydict(filename):
     """Converts filename into Python dict"""

@@ -1,7 +1,10 @@
 import argparse
 import json
+
 from .utils import get_config
 from .render_yaml import get_pydict_from_yamls
+from .data_structures import Resume
+
 
 def main():
     args = get_args()
@@ -11,12 +14,23 @@ def main():
     else:
         resume_filename = config["RESUME_YAML_FILENAME"]
     resume_pydict = get_pydict_from_yamls(resume_filename)
-    print(json.dumps(resume_pydict, indent=2))
+    resume = Resume(
+        resume_pydict["name"],
+        resume_pydict["location"],
+        resume_pydict["contact"],
+        resume_pydict["summary"],
+    )
+    resume.build()
+
+    # print(json.dumps(resume_pydict, indent=2))
+
 
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", help="Filename of yaml file of resume data")
     args = parser.parse_args()
     return args
+
+
 if __name__ == "__main__":
     main()
