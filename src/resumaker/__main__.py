@@ -1,4 +1,5 @@
 import argparse
+import json
 from .utils import get_config
 from .render_yaml import get_pydict_from_yamls
 
@@ -10,7 +11,7 @@ def main():
     else:
         resume_filename = config["RESUME_YAML_FILENAME"]
     resume_pydict = get_pydict_from_yamls(resume_filename)
-    print(resume_pydict)
+    print(json.dumps(resume_pydict, indent=2))
 
 def get_args():
     parser = argparse.ArgumentParser()
