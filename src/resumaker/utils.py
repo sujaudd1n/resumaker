@@ -12,15 +12,16 @@ def load_config():
     If config.yml is valid (a dict), it return it.
     else sys.exit
     """
-    try:
-        with open(CONFIG_FILENAME) as f:
-            config = yaml.safe_load(f)
-            if type(config) != dict:
-                sys.exit("config.yml is not valid.")
-            return config
-    except FileNotFoundError:
-        return {}
+    with open(CONFIG_FILENAME) as f:
+        config = yaml.safe_load(f)
+        if type(config) != dict:
+            raise ValueError("config.yml is not valid.")
+        return config
 
+def get_user_config():
+    """Returns user config by calling load_config
+       On exception in load_config returns {}
+    """
 
 def get_config():
     """Return config data by overwriting default_configs
