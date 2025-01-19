@@ -1,8 +1,8 @@
-from resumaker.utils import load_config, get_config
+from resumaker.utils import *
 
 import pytest
+from pytest import MonkeyPatch
 import os
-
 
 @pytest.fixture
 def delete_config_file():
@@ -25,23 +25,45 @@ def create_valid_config_file():
     yield
     os.remove("config.yml")
 
+
+
 class TestLoadConfig:
-    def test_config_file_does_not_exist(self):
-        with pytest.raises(FileNotFoundError):
-            load_config()
-
-
-    def test_config_file_exists_but_invalid(self, create_invalid_config_file):
-        with pytest.raises(ValueError) as excinfo:
-            load_config()
-        assert excinfo.type is ValueError
-        assert str(excinfo.value) == "config.yml is not valid."
-
-
-    def test_config_file_exists_and_valid(self, create_valid_config_file):
+    def test_config_file_does_not_exist(self, delete_config_file):
         config = load_config()
-        assert type(config) == dict
+        assert config == ""
 
-class TestGetConfig:
-    # def test_when
-    pass
+    def test_config_file_does_exist(self, delete_config_file):
+        config = load_config()
+        assert type(config) == str
+
+    def test_get_invalid_user_config(self, mocker):
+        mock = mocker.patch("resumaker.utils.get_rendered_config")
+        mock.return_value = [None]
+
+        with pytest.raises(ValueError) as excinfo:
+            get_valid_user_config()
+        assert excinfo.type is ValueError
+        assert str(excinfo.value) == "config.yml is not valid!"
+
+    def test_get_valid_user_config(self, mocker):
+        mock = mocker.patch("resumaker.utils.get_rendered_config")
+        mock.return_value = {"key": "value"}
+
+        config = get_valid_user_config()
+        assert config == {"key": "value"}
+
+    def test_is_config_valid(self, create_invalid_config_file):
+        config = None
+        is_valid = is_config_valid(config)
+        assert not is_valid
+
+        config = {}
+        is_valid = is_config_valid(config)
+        assert is_valid
+
+# class TestGetConfig:
+#     def test_when_load_config_raises_exception(self, mocker):
+#         mocker.patch("resumaker.utils.load_config")
+#         config = get_config()
+#         assert type(config) == dict
+#         assert len(config.keys()) == 1
