@@ -36,7 +36,13 @@ def main():
 
 
 def get_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        prog="resumaker",
+        description="Build multi-profile ATS friendly resume from a single YAML file.",
+        epilog="Thank you for using resumaker.\n"
+               "To contribute, please visit https://github.com/sujaudd1n/resumaker.",
+        formatter_class = argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("-f", help="Filename of yaml file of resume data")
     parser.add_argument("-t", help="Targeted resume")
     args = parser.parse_args()
