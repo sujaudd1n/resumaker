@@ -1,26 +1,42 @@
 import yaml
 import sys
+from .utils import validate_yaml_txt
 
 
-def get_pydict_from_yamls(filenames):
-    if type(filenames) != list:
-        filenames = [filenames]
+def get_resume_obj(filenames):
+    "Return resume dict by rendering first successful filename"
+    error_messages = []
     for filename in filenames:
         try:
-            pydict = yamlfile_to_pydict(filename)
+            resume_yaml_txt = read_file_txt(filename)
         except FileNotFoundError:
+            error_messages.append(f"{filename} is not found!")
             continue
-        except ValueError:
-            sys.exit(f"{filename} is not valid!")
+
+        try:
+            resume_obj = validate_yaml_txt_as_dict(resume_yaml_txt)
+        except:
+            error_messages.append(f"{filename} is not valid!")
         else:
-            return pydict
-    sys.exit(f"{filenames} not found!")
+            return resume_obj
 
+    for error_message in error_messages:
+        print(error_message)
 
-def yamlfile_to_pydict(filename):
-    """Converts filename into Python dict"""
+    sys.exit(f"Could not render {filenames} into valid resume object!")
+
+def read_file_txt(filename):
     with open(filename) as f:
-        pydict = yaml.safe_load(f)
-        if type(pydict) != dict:
-            raise ValueError
-    return pydict
+        return f.read()
+
+def render_yaml_txt(yaml_txt):
+    return yaml.safe_load(yaml_txt)
+
+def is_dict(obj):
+    return type(obj) == dict
+
+def validate_yaml_txt_as_dict(yaml_txt):
+    obj = render_yaml_txt(yaml_txt)
+    if is_dict(obj):
+        return obj
+    raise ValueError(f"{obj} is not a dict")

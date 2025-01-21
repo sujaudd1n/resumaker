@@ -38,6 +38,13 @@ def merge_user_config_with_defaults(user_config_obj):
             print(f"{config} is not supported!")
     return default_configs
 
+def validate_yaml_txt(yaml_txt):
+    pyobj = yaml.safe_load(yaml_txt)
+    if type(pyobj) != dict:
+        raise ValueError("Rendered YAML is not a dict.")
+    return pyobj
+    
+
 def validate_config_txt(txt):
     config_obj = yaml_to_pyobj(txt)
     if type(config_obj) == dict:

@@ -2,7 +2,7 @@ import argparse
 import json
 
 from .utils import get_config
-from .render_yaml import get_pydict_from_yamls
+from .render_yaml import *
 from .data_structures import Resume
 
 
@@ -11,14 +11,15 @@ def main():
     config = get_config()
 
     if args.f:
+        if type(args.f) != list:
+            args.f = [args.f]
         resume_filename = args.f
     else:
         resume_filename = config["RESUME_YAML_FILENAME"]
 
+    resume_pydict = get_resume_obj(resume_filename)
+
     target = args.t if args.t else "default"
-
-    resume_pydict = get_pydict_from_yamls(resume_filename)
-
     if target in resume_pydict:
         summary = resume_pydict[target]["summary"]
     else:
