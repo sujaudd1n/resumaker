@@ -42,7 +42,9 @@ def validate_config_txt(txt):
     config_obj = yaml_to_pyobj(txt)
     if type(config_obj) == dict:
         return config_obj
-    sys.exit("config.yml is not valid!")
+    else:
+        print("config.yml is not valid! Using default configs.")
+        return {}
 
 def yaml_to_pyobj(yaml_txt):
     return yaml.safe_load(yaml_txt)
