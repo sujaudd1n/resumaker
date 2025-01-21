@@ -88,18 +88,22 @@ class TestValidateConfigTxt:
         config = validate_config_txt('')
         assert config == {}
 
-    def test_when_list(self, mocker):
+    def test_when_list(self, mocker, capsys):
         mock = mocker.patch("resumaker.utils.yaml_to_pyobj")
         mock.return_value = []
-        with pytest.raises(SystemExit) as excinfo:
-            config = validate_config_txt('')
-            assert excinfo.type == SystemExit
-            assert str(excinfo.value) == "config.yml is not valid!"
 
-    def test_when_None(self, mocker):
+        config = validate_config_txt('')
+
+        captured = capsys.readouterr()
+        assert captured.out == "config.yml is not valid! Using default configs.\n"
+        assert config == {}
+
+    def test_when_None(self, mocker, capsys):
         mock = mocker.patch("resumaker.utils.yaml_to_pyobj")
         mock.return_value = None
-        with pytest.raises(SystemExit) as excinfo:
-            config = validate_config_txt('')
-            assert excinfo.type == SystemExit
-            assert str(excinfo.value) == "config.yml is not valid!"
+
+        config = validate_config_txt('')
+
+        captured = capsys.readouterr()
+        assert captured.out == "config.yml is not valid! Using default configs.\n"
+        assert config == {}
