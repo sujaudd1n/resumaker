@@ -7,7 +7,8 @@ from .data_structures import Resume
 
 
 def main():
-    args = get_args()
+    parser = get_parser()
+    args = parser.parse_args()
     config = get_config()
 
     if args.f:
@@ -36,7 +37,7 @@ def main():
     # print(json.dumps(resume_pydict, indent=2))
 
 
-def get_args():
+def get_parser():
     parser = argparse.ArgumentParser(
         prog="resumaker",
         description="Build multi-profile ATS friendly resume from a single YAML file.",
@@ -46,8 +47,7 @@ def get_args():
     )
     parser.add_argument("-f", metavar="filename", help="Filename of resume yaml file.")
     parser.add_argument("-t", metavar="target", help="Select target such as devops or AI in your resume")
-    args = parser.parse_args()
-    return args
+    return parser
 
 
 if __name__ == "__main__":

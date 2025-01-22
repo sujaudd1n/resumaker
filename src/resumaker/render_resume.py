@@ -3,11 +3,12 @@ import sys
 from .utils import (
     read_file_txt,
     render_yaml_txt,
-    validate_yaml_txt_as_dict
 )
 
 def get_resume_obj(filenames):
-    "Return resume dict by rendering first successful filename"
+    """
+    Return resume dict by rendering first successful filename
+    """
     error_messages = []
     for filename in filenames:
         try:
