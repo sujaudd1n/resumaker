@@ -1,3 +1,9 @@
-# SPDX-FileCopyrightText: 2025-present Sujauddin <61101752+sujaudd1n@users.noreply.github.com>
-#
-# SPDX-License-Identifier: MIT
+"""
+Resumaker helps you to build multi-targeted resume from a single yaml file.
+"""
+
+from resumaker.__about__ import (
+    __version__,
+    __license__,
+    __author__
+)
