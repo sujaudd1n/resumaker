@@ -20,41 +20,40 @@ links:
   blog: [sujauddin.me/articles]
 
 
-# default resume
-summary:
-  title: Junior Software Engineer
-  text: hello world
+swe:
+  summary:
+    title: Junior Software Engineer
+    text: hello world
 
-skills:
-  languages: [Python, JS]
-  libraries: [Django, NextJS]
-  databases: [SQLite, MongoDB]
+  skills:
+    languages: [Python, JS]
+    libraries: [Django, NextJS]
+    databases: [SQLite, MongoDB]
 
-work_experience:
-  - comapny_name: Company Y
-    postion: Python Intern
-    duration: Oct 2024 - Jan 2025
-    contributions:
-      - contribution 1
-      - contribution 2
-      - contribution 3
-  - comapny-name: Company Z
-    postion: Y Intern
-    duration: Oct 2024 - Jan 2025
-    contributions:
-      - contribution 1
-      - contribution 2
-      - contribution 3
+  work_experience:
+    - comapny_name: Company Y
+      postion: Python Intern
+      duration: Oct 2024 - Jan 2025
+      contributions:
+        - contribution 1
+        - contribution 2
+        - contribution 3
+    - comapny-name: Company Z
+      postion: Y Intern
+      duration: Oct 2024 - Jan 2025
+      contributions:
+        - contribution 1
+        - contribution 2
+        - contribution 3
 
-projects:
-  - name: Project 1
-    techstack: [Django, REST API]
-    details:
-      - Detail 1
-      - Detail 2
-      - Detail 3
+  projects:
+    - name: Project 1
+      techstack: [Django, REST API]
+      details:
+        - Detail 1
+        - Detail 2
+        - Detail 3
   
-# targeted resume
 machine_learning:
   summary:
     title: Junior Machine Learning Engineer

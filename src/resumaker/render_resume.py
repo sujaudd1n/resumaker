@@ -5,6 +5,7 @@ from .utils import (
     render_yaml_txt,
 )
 
+
 def get_resume_obj(filenames):
     """
     Return resume dict by rendering first successful filename
@@ -27,6 +28,7 @@ def get_resume_obj(filenames):
         print(error_message)
 
     sys.exit(f"Could not render {filenames} into valid resume object!")
+
 
 def is_resume_obj_valid(resume_obj):
     return isinstance(resume_obj, dict)

@@ -2,6 +2,7 @@ import os
 import pytest
 from resumaker.utils import *
 
+
 class TestReadFileTxt:
     @pytest.fixture
     def create_file(self, request):
@@ -11,7 +12,7 @@ class TestReadFileTxt:
         else:
             filename = marker.args[0]
             txt = marker.args[1]
-        f = open(filename, 'w')
+        f = open(filename, "w")
         f.write(txt)
         f.close()
         yield

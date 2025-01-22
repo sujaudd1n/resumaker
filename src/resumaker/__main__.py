@@ -8,33 +8,62 @@ from .data_structures import Resume
 
 def main():
     parser = get_parser()
-    args = parser.parse_args()
     config = get_config()
 
-    if args.f:
-        if type(args.f) != list:
-            args.f = [args.f]
-        resume_filename = args.f
+    args = parser.parse_args()
+
+    if args.filenames:
+        filenames = args.filenames
+        if type(filenames) != list:
+            filenames = [filenames]
+        resume_filename = filenames
     else:
         resume_filename = config["RESUME_FILENAME"]
 
-    resume_pydict = get_resume_obj(resume_filename)
+    resume_target = args.target if args.target else None
 
-    target = args.t if args.t else "default"
-    if target in resume_pydict:
-        summary = resume_pydict[target]["summary"]
+    complete_resume_obj = get_resume_obj(resume_filename)
+
+    common_part = [
+        "name",
+        "location",
+        "contact",
+        "education",
+        "links",
+    ]
+
+    common = {
+        "name": complete_resume_obj.get("name"),
+        "location": complete_resume_obj.get("location"),
+        "contact": complete_resume_obj.get("contact"),
+        "education": complete_resume_obj.get("education"),
+        "links": complete_resume_obj.get("links"),
+    }
+
+    given_targets = [
+        key for key in complete_resume_obj.keys() if key not in common_part
+    ]
+
+    print(given_targets)
+
+    if resume_target:
+        if resume_target in given_targets:
+            target_details = [complete_resume_obj[resume_target] | common]
+        else:
+            sys.exit("Target is not in the resume")
     else:
-        summary = resume_pydict["summary"]
+        target_details = []
+        for target in given_targets:
+            target_details.append(complete_resume_obj[target] | common)
 
-    resume = Resume(
-        resume_pydict["name"],
-        resume_pydict["location"],
-        resume_pydict["contact"],
-        summary
-    )
-    resume.build()
-
-    # print(json.dumps(resume_pydict, indent=2))
+    for target in target_details:
+        resume = Resume(
+            target["name"],
+            target["location"],
+            target["contact"],
+        )
+        resume.build(target['summary']['title'])
+        # print(json.dumps(complete_resume_obj, indent=2))
 
 
 def get_parser():
@@ -42,11 +71,23 @@ def get_parser():
         prog="resumaker",
         description="Build multi-profile ATS friendly resume from a single YAML file.",
         epilog="Thank you for using resumaker.\n"
-               "To contribute, please visit https://github.com/sujaudd1n/resumaker.",
-        formatter_class = argparse.RawDescriptionHelpFormatter
+        "To contribute, please visit https://github.com/sujaudd1n/resumaker.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("-f", metavar="filename", help="Filename of resume yaml file.")
-    parser.add_argument("-t", metavar="target", help="Select target such as devops or AI in your resume")
+    parser.add_argument(
+        "-f",
+        "--filename",
+        metavar="filename",
+        dest="filenames",
+        help="Filename of resume yaml file.",
+    )
+    parser.add_argument(
+        "-t",
+        "--target",
+        metavar="target",
+        dest="target",
+        help="Select target such as devops or AI in your resume",
+    )
     return parser
 
 

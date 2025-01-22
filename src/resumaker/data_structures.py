@@ -7,9 +7,9 @@ from .template import template
 
 
 class Resume:
-    def __init__(self, name, location, contact, summary):
+    def __init__(self, name, location, contact):
         self.contact = Contact(name, location, contact)
-        self.summary = Summary(summary)
+        # self.summary = Summary(summary)
         # self.skills = Skills()
         # self.work_experience = WorkExperience()
         # self.projects = Project()
@@ -26,8 +26,8 @@ class Resume:
         chunks.append(contact_tex)
 
         internal_chunks = []
-        summary_tex = self.summary.generate_tex()
-        internal_chunks.append(summary_tex)
+        # summary_tex = self.summary.generate_tex()
+        # internal_chunks.append(summary_tex)
 
         main_content_str = "\n".join(internal_chunks)
         main_tex_template = Template(template["main"])
@@ -36,26 +36,27 @@ class Resume:
 
         return "\n".join(chunks)
 
-    def write_tex(self):
-        filepath = Path(__file__).parent.parent.parent.joinpath("templates/resume.tex")
+    def write_tex(self, filename):
+        filepath = Path(__file__).parent.parent.parent.joinpath(f"templates/{filename}.tex")
         print(filepath)
         with open(filepath, "w") as f:
             text = self.generate_tex()
             f.write(text)
 
-    def build(self):
-        self.write_tex()
-        filepath = Path(__file__).parent.parent.parent.joinpath("templates/resume.tex")
+    def build(self, filename):
+        self.write_tex(filename)
+        filepath = Path(__file__).parent.parent.parent.joinpath(f"templates/{filename}.tex")
         old_cwd = os.getcwd()
         newdir = os.path.dirname(filepath)
         os.chdir(newdir)
-        cmpr = subprocess.run(["pdflatex", filepath])
+        cmpr = subprocess.run(["pdflatex", "-interaction=batchmode", filepath])
         print(cmpr.returncode)
         if cmpr.returncode != 0:
             raise Exception
-        shutil.copy("resume.pdf", os.path.join(old_cwd, "resume.pdf"))
-        for ext in ["pdf", "log", "out", "tex", "aux"]:
-            os.remove("resume." + ext)
+        shutil.move(filename + '.pdf', os.path.join(old_cwd, filename + '.pdf'))
+        for ext in ["log", "out", "tex", "aux"]:
+            os.remove(filename + '.' + ext)
+        os.chdir(old_cwd)
 
     def __str__(self):
         return f"{self.name}"
@@ -98,7 +99,6 @@ class Summary:
             text=self.text,
         )
         return summary_tex
-
 
     def __str__(self):
         return f"{self.title}"

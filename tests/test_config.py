@@ -3,6 +3,7 @@ import pytest
 from resumaker.config import *
 from resumaker.utils import *
 
+
 @pytest.fixture
 def delete_config_file():
     if os.path.exists("config.yml"):
@@ -43,6 +44,7 @@ class TestGetConfig:
         config = get_config()
         assert config == return_obj
 
+
 class TestManageUserConfigTxt:
     def test_when_config_obj_invalid(self, mocker, capsys):
         patch1 = mocker.patch("resumaker.config.render_yaml_txt")
@@ -66,9 +68,9 @@ class TestManageUserConfigTxt:
         patch3 = mocker.patch("resumaker.config.merge_user_config_with_defaults")
         patch3.return_value = p3_return
 
-
         out = manage_user_config_txt(None)
         assert out == p3_return
+
 
 @pytest.fixture
 def apply_user_config_obj(request):
@@ -79,36 +81,29 @@ def apply_user_config_obj(request):
         data = marker.args[0]
     return data
 
+
 class TestMergeUserConfigWithDefaults:
     @pytest.mark.config_data({})
     def test_when_not_overwritten(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == default_configs
 
-    @pytest.mark.config_data({
-        "RESUME_FILENAME": "custom.yml"
-    })
+    @pytest.mark.config_data({"RESUME_FILENAME": "custom.yml"})
     def test_when_overwritten_with_string(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
-        assert config == {
-            "RESUME_FILENAME": ["custom.yml"]
-        }
+        assert config == {"RESUME_FILENAME": ["custom.yml"]}
 
-    @pytest.mark.config_data({
-        "RESUME_FILENAME": ["custom.yml"]
-    })
+    @pytest.mark.config_data({"RESUME_FILENAME": ["custom.yml"]})
     def test_when_overwritten_with_list(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
-        assert config == {
-            "RESUME_FILENAME": ["custom.yml"]
-        }
+        assert config == {"RESUME_FILENAME": ["custom.yml"]}
 
-    @pytest.mark.config_data({
-        "custom_config": ["custom_value"]
-    })
+    @pytest.mark.config_data({"custom_config": ["custom_value"]})
     def test_ignore_unsupported_config(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == default_configs
+
+
 class TestIsConfigValid:
     def test_when_dict(self, mocker):
         config = is_config_valid({})

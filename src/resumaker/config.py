@@ -2,13 +2,11 @@ import sys
 import os
 import yaml
 
-from resumaker.utils import (
-    read_file_txt,
-    render_yaml_txt
-)
+from resumaker.utils import read_file_txt, render_yaml_txt
 
 CONFIG_FILENAME = "config.yml"
 default_configs = {"RESUME_FILENAME": ["resume.yml", "resume.yaml"]}
+
 
 def get_config():
     """
@@ -35,6 +33,7 @@ def manage_user_config_txt(user_config_txt):
         print("config.yml is not valid! Using default configs.")
         return default_configs
 
+
 def is_config_valid(config_obj):
     """
     config_obj has to be a dict.
@@ -47,6 +46,7 @@ def is_config_valid(config_obj):
             return False
     return True
 
+
 def merge_user_config_with_defaults(user_config_obj):
     """
     Overwrite default_configs with user_config_obj.
@@ -55,7 +55,11 @@ def merge_user_config_with_defaults(user_config_obj):
     for config in user_config_obj:
         if config in default_configs:
             user_config_value = user_config_obj[config]
-            default_configs[config] = user_config_value if type(user_config_value) == list else [user_config_value]
+            default_configs[config] = (
+                user_config_value
+                if type(user_config_value) == list
+                else [user_config_value]
+            )
         else:
             print(f"{config} is not supported!")
     return default_configs
