@@ -35,5 +35,3 @@ class TestReadFileTxt:
     def test_file_exists_and_not_empty(self, create_file):
         txt = read_file_txt("file.txt")
         assert txt == "hello-world"
-
-

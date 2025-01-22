@@ -2,7 +2,7 @@ import sys
 import os
 import yaml
 
-from .utils import (
+from resumaker.utils import (
     read_file_txt,
     render_yaml_txt
 )
