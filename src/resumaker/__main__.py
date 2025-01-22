@@ -1,8 +1,8 @@
 import argparse
 import json
 
-from .utils import get_config
-from .render_yaml import *
+from .config import get_config
+from .render_resume import *
 from .data_structures import Resume
 
 
@@ -15,7 +15,7 @@ def main():
             args.f = [args.f]
         resume_filename = args.f
     else:
-        resume_filename = config["RESUME_YAML_FILENAME"]
+        resume_filename = config["RESUME_FILENAME"]
 
     resume_pydict = get_resume_obj(resume_filename)
 
@@ -44,8 +44,8 @@ def get_args():
                "To contribute, please visit https://github.com/sujaudd1n/resumaker.",
         formatter_class = argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("-f", help="Filename of yaml file of resume data")
-    parser.add_argument("-t", help="Targeted resume")
+    parser.add_argument("-f", metavar="filename", help="Filename of resume yaml file.")
+    parser.add_argument("-t", metavar="target", help="Select target such as devops or AI in your resume")
     args = parser.parse_args()
     return args
 

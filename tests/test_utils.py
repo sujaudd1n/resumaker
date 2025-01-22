@@ -25,6 +25,7 @@ def create_valid_config_file():
     yield
     os.remove("config.yml")
 
+
 class TestGetConfig:
     def test_when_filenotfound(self, mocker):
         mocked_load_config = mocker.patch("resumaker.utils.load_config")

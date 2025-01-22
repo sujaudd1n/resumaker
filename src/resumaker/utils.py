@@ -2,29 +2,23 @@ import sys
 import os
 import yaml
 
-CONFIG_FILENAME = "config.yml"
-default_configs = {"RESUME_YAML_FILENAME": ["resume.yml", "resume.yaml"]}
-
-def get_config():
-    """Return config data by overwriting default_configs
-    by reading config.yml
-    """
-    try:
-        user_config_txt = load_config()
-    except FileNotFoundError:
-        return default_configs
-    else:
-        return manage_user_config_txt(user_config_txt)
-
-
-def load_config():
-    """Load config data by reading config.yml
-    If config.yml is valid (a dict), it return it.
-    else sys.exit
-    """
-    with open(CONFIG_FILENAME) as f:
+def read_file_txt(filename):
+    with open(filename) as f:
         return f.read()
 
+def render_yaml_txt(yaml_txt):
+    return yaml.safe_load(yaml_txt)
+
+def is_dict(obj):
+    return type(obj) == dict
+
+def validate_yaml_txt_as_dict(yaml_txt):
+    obj = render_yaml_txt(yaml_txt)
+    if is_dict(obj):
+        return obj
+    raise ValueError(f"{obj} is not a dict")
+
+'''
 def manage_user_config_txt(user_config_txt):
     user_config_obj = validate_config_txt(user_config_txt)
     return merge_user_config_with_defaults(user_config_obj)
@@ -55,3 +49,4 @@ def validate_config_txt(txt):
 
 def yaml_to_pyobj(yaml_txt):
     return yaml.safe_load(yaml_txt)
+'''
