@@ -23,9 +23,8 @@ def get_resume_obj(filenames):
             return resume_obj, None
         else:
             error_messages.append(f"{filename} is not valid!")
-    
-    return None, error_messages
 
+    return None, error_messages
 
 
 def is_resume_obj_valid(resume_obj):

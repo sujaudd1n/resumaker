@@ -1,6 +1,7 @@
 import pytest
 from resumaker.render_resume import get_resume_obj
 
+
 @pytest.fixture
 def create_file(request):
     marker = request.node.get_closest_marker("fixture_data")
@@ -10,8 +11,9 @@ def create_file(request):
         data = None
     return data
 
+
 class TestGetResumeObj:
-    @pytest.mark.fixture_data(['file1.yml'])
+    @pytest.mark.fixture_data(["file1.yml"])
     def test_filenames_does_not_exist(self, mocker, create_file):
         patch1 = mocker.patch("resumaker.render_resume.read_file_txt")
         patch1.side_effect = FileNotFoundError
@@ -21,7 +23,7 @@ class TestGetResumeObj:
         assert error is not None
         assert error[0] == "file1.yml is not found!"
 
-    @pytest.mark.fixture_data(['file1.yml'])
+    @pytest.mark.fixture_data(["file1.yml"])
     def test_filenames_exists_but_invalid(self, mocker, create_file):
         patch1 = mocker.patch("resumaker.render_resume.read_file_txt")
         patch1.return_value = "yaml_text"
@@ -34,7 +36,7 @@ class TestGetResumeObj:
         assert error is not None
         assert error[0] == "file1.yml is not valid!"
 
-    @pytest.mark.fixture_data(['file1.yml'])
+    @pytest.mark.fixture_data(["file1.yml"])
     def test_filenames_exists_and_valid(self, mocker, create_file):
         patch1 = mocker.patch("resumaker.render_resume.read_file_txt")
         patch1.return_value = "key: val"

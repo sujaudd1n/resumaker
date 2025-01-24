@@ -7,27 +7,28 @@ from .template import template
 
 
 class Resume:
-    def __init__(self, name, location, contact):
+    def __init__(self, name, location, contact, summary, links):
         self.contact = Contact(name, location, contact)
-        # self.summary = Summary(summary)
-        # self.skills = Skills()
+        self.summary = Summary(summary)
+        # self.skills = Skills(skills)
         # self.work_experience = WorkExperience()
         # self.projects = Project()
         # self.education = Education()
-        # self.links = Links()
+        self.links = Links(links)
 
     def generate_tex(self):
         chunks = []
 
         chunks.append(template["license"])
         chunks.append(template["setup"])
-
         contact_tex = self.contact.generate_tex()
         chunks.append(contact_tex)
 
         internal_chunks = []
-        # summary_tex = self.summary.generate_tex()
-        # internal_chunks.append(summary_tex)
+        summary_tex = self.summary.generate_tex()
+        internal_chunks.append(summary_tex)
+        links_tex = self.links.generate_tex()
+        internal_chunks.append(links_tex)
 
         main_content_str = "\n".join(internal_chunks)
         main_tex_template = Template(template["main"])
@@ -53,10 +54,10 @@ class Resume:
         old_cwd = os.getcwd()
         newdir = os.path.dirname(filepath)
         os.chdir(newdir)
-        cmpr = subprocess.run(["pdflatex", "-interaction=batchmode", filepath])
+        cmpr = subprocess.run(["pdflatex", filepath])
         print(cmpr.returncode)
-        if cmpr.returncode != 0:
-            raise Exception
+        # if cmpr.returncode != 0:
+        # raise Exception
         shutil.move(filename + ".pdf", os.path.join(old_cwd, filename + ".pdf"))
         for ext in ["log", "out", "tex", "aux"]:
             os.remove(filename + "." + ext)
@@ -103,6 +104,33 @@ class Summary:
             text=self.text,
         )
         return summary_tex
+
+    def __str__(self):
+        return f"{self.title}"
+
+
+class Links:
+    def __init__(self, links):
+        self.links = links
+
+    def generate_tex(self):
+        links_complete_tex_template = Template(template["links"]["complete"])
+        single_tex = []
+        for link_name, link_content in self.links.items():
+            print(link_name, link_content)
+            links_single_tex_template = Template(template["links"]["single"])
+            single_tex.append(
+                links_single_tex_template.substitute(
+                    link_title=link_content["name"],
+                    link_url=link_content["url"],
+                    link_url_text=link_content["url_text"],
+                )
+            )
+        links_tex = links_complete_tex_template.substitute(
+            all_links="\n".join(single_tex)
+        )
+        print(links_tex)
+        return links_tex
 
     def __str__(self):
         return f"{self.title}"

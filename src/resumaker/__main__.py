@@ -62,15 +62,24 @@ def main():
     else:
         target_details = []
         for target in given_targets:
-            target_details.append(complete_resume_obj[target] | common)
+            target_details.append(
+                complete_resume_obj[target] | {"target_name": target} | common
+            )
+
+    def build_name(target):
+        user_name = target["name"].replace(" ", "").lower()
+        target_name = target["target_name"]
+        return f"{user_name}-{target_name}"
 
     for target in target_details:
         resume = Resume(
             target["name"],
             target["location"],
             target["contact"],
+            target["summary"],
+            target["links"],
         )
-        resume.build(target["summary"]["title"])
+        resume.build(build_name(target))
         # print(json.dumps(complete_resume_obj, indent=2))
 
 
@@ -97,9 +106,7 @@ def get_parser():
         help="Select target such as devops or AI in your resume",
     )
     parser.add_argument(
-        "--version",
-        action="version",
-        version=f"%(prog)s {__version__}"
+        "--version", action="version", version=f"%(prog)s {__version__}"
     )
     return parser
 

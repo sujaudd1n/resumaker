@@ -44,6 +44,24 @@ template = {
 $CONTENT
 \end{document}
 """,
+    "education": {
+        "complete": r"""
+    \begin{rSection}{Education}
+        \textbf{$institution_name} \hfill \textit{$duration} \\ 
+        $institution_location
+        $all_acheivements
+    \end{rSection}""",
+        "single": r"$single_acheivement \\",
+    },
+    "links": {
+        "complete": r"""
+\begin{rSection}{Links}
+	\begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l @{}}
+        $all_links
+	\end{tabular}
+\end{rSection}""",
+        "single": r"$link_title & \href{$link_url}{$link_url_text} \\",
+    },
     "summary": r"""
 \begin{rSection}{$title}
     $text
