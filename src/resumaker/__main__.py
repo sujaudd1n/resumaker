@@ -4,6 +4,7 @@ import json
 from .config import get_config
 from .render_resume import *
 from .data_structures import Resume
+from resumaker.__about__ import __version__
 
 
 def main():
@@ -62,7 +63,7 @@ def main():
             target["location"],
             target["contact"],
         )
-        resume.build(target['summary']['title'])
+        resume.build(target["summary"]["title"])
         # print(json.dumps(complete_resume_obj, indent=2))
 
 
@@ -87,6 +88,11 @@ def get_parser():
         metavar="target",
         dest="target",
         help="Select target such as devops or AI in your resume",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}"
     )
     return parser
 

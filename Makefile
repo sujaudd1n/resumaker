@@ -11,4 +11,4 @@ format:
 lint:
 	python -m flake8 src/
 test:
-	pytest
+	PYTHONPATH="$(shell pwd)/src:$$PYTHONPATH" pytest

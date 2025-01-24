@@ -37,7 +37,9 @@ class Resume:
         return "\n".join(chunks)
 
     def write_tex(self, filename):
-        filepath = Path(__file__).parent.parent.parent.joinpath(f"templates/{filename}.tex")
+        filepath = Path(__file__).parent.parent.parent.joinpath(
+            f"templates/{filename}.tex"
+        )
         print(filepath)
         with open(filepath, "w") as f:
             text = self.generate_tex()
@@ -45,7 +47,9 @@ class Resume:
 
     def build(self, filename):
         self.write_tex(filename)
-        filepath = Path(__file__).parent.parent.parent.joinpath(f"templates/{filename}.tex")
+        filepath = Path(__file__).parent.parent.parent.joinpath(
+            f"templates/{filename}.tex"
+        )
         old_cwd = os.getcwd()
         newdir = os.path.dirname(filepath)
         os.chdir(newdir)
@@ -53,9 +57,9 @@ class Resume:
         print(cmpr.returncode)
         if cmpr.returncode != 0:
             raise Exception
-        shutil.move(filename + '.pdf', os.path.join(old_cwd, filename + '.pdf'))
+        shutil.move(filename + ".pdf", os.path.join(old_cwd, filename + ".pdf"))
         for ext in ["log", "out", "tex", "aux"]:
-            os.remove(filename + '.' + ext)
+            os.remove(filename + "." + ext)
         os.chdir(old_cwd)
 
     def __str__(self):
