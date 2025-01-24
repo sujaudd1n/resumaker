@@ -67,4 +67,41 @@ $CONTENT
     $text
 \end{rSection}
 """,
+    "skills": {
+        "complete": r"""
+            \begin{rSection}{Skills}
+                \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l @{}}
+                    $all_skills
+                \end{tabular}
+            \end{rSection}
+    """,
+        "single": r"$skill_topic & $skills_list \\",
+    },
+    "work_experience": {
+        "complete": r"""
+                \begin{rSection}{Work Experience}
+                \def \\ {\addressSep\ } 
+                $all_work_experiences
+            \end{rSection}
+    """,
+        "single": r"""
+            \begin{rSubsection}{$company_name, $company_location \\ $position \\ $duration}{}{}{}
+                    $all_acheivements
+	        \end{rSubsection}
+        """,
+        "single-acheivement": r"\item $acheivement",
+    },
+    "projects": {
+        "complete": r"""
+                \begin{rSection}{Projects}
+                $all_projects
+            \end{rSection}
+    """,
+        "single": r"""
+            \begin{rSubsection}{$project_name}{$technologies}{}{}
+                    $all_details
+	        \end{rSubsection}
+        """,
+        "single-detail": r"\item $detail",
+    },
 }
