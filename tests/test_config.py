@@ -74,7 +74,7 @@ class TestManageUserConfigTxt:
 
 @pytest.fixture
 def apply_user_config_obj(request):
-    marker = request.node.get_closest_marker("config_data")
+    marker = request.node.get_closest_marker("fixture_data")
     if marker is None:
         data = None
     else:
@@ -83,22 +83,22 @@ def apply_user_config_obj(request):
 
 
 class TestMergeUserConfigWithDefaults:
-    @pytest.mark.config_data({})
+    @pytest.mark.fixture_data({})
     def test_when_not_overwritten(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == default_configs
 
-    @pytest.mark.config_data({"RESUME_FILENAME": "custom.yml"})
+    @pytest.mark.fixture_data({"RESUME_FILENAME": "custom.yml"})
     def test_when_overwritten_with_string(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == {"RESUME_FILENAME": ["custom.yml"]}
 
-    @pytest.mark.config_data({"RESUME_FILENAME": ["custom.yml"]})
+    @pytest.mark.fixture_data({"RESUME_FILENAME": ["custom.yml"]})
     def test_when_overwritten_with_list(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == {"RESUME_FILENAME": ["custom.yml"]}
 
-    @pytest.mark.config_data({"custom_config": ["custom_value"]})
+    @pytest.mark.fixture_data({"custom_config": ["custom_value"]})
     def test_ignore_unsupported_config(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == default_configs

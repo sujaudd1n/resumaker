@@ -66,6 +66,6 @@ exclude_lines = [
 ]
 [tool.pytest.ini_options]
 markers = [
-  "config_data",
+  "fixture_data",
   "create_file"
 ]

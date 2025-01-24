@@ -20,14 +20,12 @@ def get_resume_obj(filenames):
 
         resume_obj = render_yaml_txt(resume_yaml_txt)
         if is_resume_obj_valid(resume_obj):
-            return resume_obj
+            return resume_obj, None
         else:
             error_messages.append(f"{filename} is not valid!")
+    
+    return None, error_messages
 
-    for error_message in error_messages:
-        print(error_message)
-
-    sys.exit(f"Could not render {filenames} into valid resume object!")
 
 
 def is_resume_obj_valid(resume_obj):

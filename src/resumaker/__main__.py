@@ -17,13 +17,20 @@ def main():
         filenames = args.filenames
         if type(filenames) != list:
             filenames = [filenames]
-        resume_filename = filenames
+        resume_filenames = filenames
     else:
-        resume_filename = config["RESUME_FILENAME"]
+        resume_filenames = config["RESUME_FILENAME"]
 
     resume_target = args.target if args.target else None
 
-    complete_resume_obj = get_resume_obj(resume_filename)
+    result, errors = get_resume_obj(resume_filenames)
+
+    if result:
+        complete_resume_obj = result
+    else:
+        for error in errors:
+            print(error)
+        sys.exit(f"Could not render {resume_filenames} into valid resume object!")
 
     common_part = [
         "name",
