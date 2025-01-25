@@ -2,7 +2,7 @@ import argparse
 import json
 
 from resumaker.config import get_config
-from resumaker.utils import is_resume_valid, common_fields 
+from resumaker.utils import is_resume_valid, common_fields
 from resumaker.render_resume import *
 from resumaker.resume import Resume
 from resumaker.__about__ import __version__
@@ -75,6 +75,7 @@ def main():
             target["contact"],
             target["summary"],
             target["links"],
+            target["skills"],
         )
         resume.build(build_name(target))
         # print(json.dumps(complete_resume_obj, indent=2))

@@ -7,10 +7,10 @@ from .template import template
 
 
 class Resume:
-    def __init__(self, name, location, contact, summary, links):
+    def __init__(self, name, location, contact, summary, links, skills):
         self.contact = Contact(name, location, contact)
         self.summary = Summary(summary)
-        # self.skills = Skills(skills)
+        self.skills = Skills(skills)
         # self.work_experience = WorkExperience()
         # self.projects = Project()
         # self.education = Education()
@@ -27,6 +27,8 @@ class Resume:
         internal_chunks = []
         summary_tex = self.summary.generate_tex()
         internal_chunks.append(summary_tex)
+        skills_tex = self.skills.generate_tex()
+        internal_chunks.append(skills_tex)
         links_tex = self.links.generate_tex()
         internal_chunks.append(links_tex)
 
@@ -131,6 +133,30 @@ class Links:
         )
         print(links_tex)
         return links_tex
+
+    def __str__(self):
+        return f"{self.title}"
+
+
+class Skills:
+    def __init__(self, skills):
+        self.skills = skills
+
+    def generate_tex(self):
+        skills_complete_tex_template = Template(template["skills"]["complete"])
+        single_tex = []
+        for skill_topic, skills_list in self.skills.items():
+            skill_single_tex_template = Template(template["skills"]["single"])
+            single_tex.append(
+                skill_single_tex_template.substitute(
+                    skill_topic=skill_topic[0].upper() + skill_topic[1:],
+                    skills_list=", ".join(skills_list),
+                )
+            )
+        skills_tex = skills_complete_tex_template.substitute(
+            all_skills="\n".join(single_tex)
+        )
+        return skills_tex
 
     def __str__(self):
         return f"{self.title}"

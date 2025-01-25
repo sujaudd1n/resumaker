@@ -7,7 +7,7 @@ common_fields = {
     "location": str,
     "contact": dict,
     "education": list,
-    "links":dict,
+    "links": dict,
 }
 
 
@@ -28,7 +28,9 @@ def is_resume_valid(resume_obj):
         # check each common-field's type is valid if present
         for field, dtype in common_fields.items():
             if field in resume_obj:
-                assert isinstance(resume_obj[field], dtype), f"{field} should be a {dtype}"
+                assert isinstance(
+                    resume_obj[field], dtype
+                ), f"{field} should be a {dtype}"
     except AssertionError as exc:
         return False, str(exc)
     return True, None
