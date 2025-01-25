@@ -1,9 +1,10 @@
 import argparse
 import json
 
-from .config import get_config
-from .render_resume import *
-from .data_structures import Resume
+from resumaker.config import get_config
+from resumaker.utils import is_resume_valid, common_fields 
+from resumaker.render_resume import *
+from resumaker.resume import Resume
 from resumaker.__about__ import __version__
 
 
@@ -32,13 +33,9 @@ def main():
             print(error)
         sys.exit(f"Could not render {resume_filenames} into valid resume object!")
 
-    common_part = [
-        "name",
-        "location",
-        "contact",
-        "education",
-        "links",
-    ]
+    is_valid, msg = is_resume_valid(complete_resume_obj)
+    if not is_valid:
+        sys.exit(msg)
 
     common = {
         "name": complete_resume_obj.get("name"),
@@ -49,7 +46,7 @@ def main():
     }
 
     given_targets = [
-        key for key in complete_resume_obj.keys() if key not in common_part
+        key for key in complete_resume_obj.keys() if key not in common_fields
     ]
 
     print(given_targets)

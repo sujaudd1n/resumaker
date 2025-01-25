@@ -36,3 +36,47 @@ class TestReadFileTxt:
     def test_file_exists_and_not_empty(self, create_file):
         txt = read_file_txt("file.txt")
         assert txt == "hello-world"
+
+
+class TestIsConfigValid:
+    def test_when_dict(self, mocker):
+        config = is_config_valid({})
+        assert config == True
+
+    def test_when_list(self, mocker, capsys):
+        config = is_config_valid([])
+        assert config == False
+
+
+class TestIsResumeValid:
+    def test_when_dict(self, mocker):
+        config = is_resume_valid({})
+        assert config == True
+
+    def test_when_fields_value_valid(self, mocker):
+        config = is_resume_valid(
+{
+                "name": "test-user",
+                "location": "location-y",
+                "contact": "9999999",
+                "education": [
+                    {"name": "clg-1", "duration": "2222 - 3333", "degree": "deg360"}
+                ]
+            }
+            )
+        assert config == True
+
+    def test_when_fields_value_invalid(self, mocker):
+        config = is_resume_valid(
+            {
+                "name": "test-user",
+                "location": ["location-list"],
+                "contact": {"phone": "9999999"},
+                "education": "clg-2"
+            }
+        )
+        assert config == False
+
+    def test_when_list(self, mocker, capsys):
+        config = is_config_valid([])
+        assert config == False

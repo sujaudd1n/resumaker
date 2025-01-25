@@ -102,13 +102,3 @@ class TestMergeUserConfigWithDefaults:
     def test_ignore_unsupported_config(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
         assert config == default_configs
-
-
-class TestIsConfigValid:
-    def test_when_dict(self, mocker):
-        config = is_config_valid({})
-        assert config == True
-
-    def test_when_list(self, mocker, capsys):
-        config = is_config_valid([])
-        assert config == False

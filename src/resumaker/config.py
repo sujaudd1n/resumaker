@@ -2,7 +2,7 @@ import sys
 import os
 import yaml
 
-from resumaker.utils import read_file_txt, render_yaml_txt
+from resumaker.utils import read_file_txt, render_yaml_txt, is_config_valid
 
 CONFIG_FILENAME = "config.yml"
 default_configs = {"RESUME_FILENAME": ["resume.yml", "resume.yaml"]}
@@ -32,19 +32,6 @@ def manage_user_config_txt(user_config_txt):
     else:
         print("config.yml is not valid! Using default configs.")
         return default_configs
-
-
-def is_config_valid(config_obj):
-    """
-    config_obj has to be a dict.
-    Each value in key: value has to be a str or list
-    """
-    if not isinstance(config_obj, dict):
-        return False
-    for _, val in config_obj.items():
-        if not isinstance(val, list) and not isinstance(val, str):
-            return False
-    return True
 
 
 def merge_user_config_with_defaults(user_config_obj):
