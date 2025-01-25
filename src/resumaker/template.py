@@ -90,10 +90,10 @@ $CONTENT
     """,
         "single": r"""
             \begin{rSubsection}{$company_name, $company_location \\ $position \\ $duration}{}{}{}
-                    $all_acheivements
+                    $all_contributions
 	        \end{rSubsection}
         """,
-        "single-acheivement": r"\item $acheivement",
+        "single-contribution": r"\item $contribution",
     },
     "projects": {
         "complete": r"""

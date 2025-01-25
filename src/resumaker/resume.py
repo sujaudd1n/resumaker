@@ -8,13 +8,22 @@ from resumaker.template import template
 
 class Resume:
     def __init__(
-        self, name, location, contact, summary, education, links, skills, order
+        self,
+        name,
+        location,
+        contact,
+        summary,
+        education,
+        links,
+        skills,
+        work_experience,
+        order,
     ):
         self.contact = Contact(name, location, contact)
         self.summary = Summary(summary)
         self.education = Education(education)
         self.skills = Skills(skills)
-        # self.work_experience = WorkExperience()
+        self.work_experience = WorkExperience(work_experience)
         # self.projects = Project()
         self.links = Links(links)
 
@@ -175,7 +184,6 @@ class Links:
     def __str__(self):
         return f"{self.title}"
 
-
 class Skills:
     def __init__(self, skills):
         self.skills = skills
@@ -198,3 +206,42 @@ class Skills:
 
     def __str__(self):
         return f"{self.title}"
+
+
+class WorkExperience:
+    def __init__(self, work_experience):
+        self.work_experience = work_experience
+
+    def generate_tex(self):
+        we_complete_tex_template = Template(template["work_experience"]["complete"])
+        we_single_tex_template = Template(template["work_experience"]["single"])
+        contribution_tex_template = Template(template["work_experience"]["single-contribution"])
+        
+        single_tex = []
+        for experience in self.work_experience:
+            company_name = experience['company-name']
+            company_location = experience['location']
+            position = experience['position']
+            duration = experience['duration']
+
+            contribution_tex = []
+            for contribution in experience['contributions']:
+                contribution_tex.append(
+                    contribution_tex_template.substitute(contribution=contribution)
+                )
+
+            single_tex.append(
+                we_single_tex_template.substitute(
+                    company_name=company_name,
+                    company_location=company_location,
+                    position=position,
+                    duration=duration,
+                    all_contributions= '\n'.join(contribution_tex)
+                )
+            )
+
+        we_tex = we_complete_tex_template.substitute(
+            all_work_experiences="\n".join(single_tex)
+        )
+
+        return we_tex

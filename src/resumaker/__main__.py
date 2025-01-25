@@ -77,6 +77,7 @@ def main():
             target["education"],
             target["links"],
             target["skills"],
+            target["work-experience"],
             order=config["ORDER"],
         )
         resume.build(build_name(target))
