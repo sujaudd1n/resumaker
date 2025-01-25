@@ -77,6 +77,7 @@ def main():
             target["education"],
             target["links"],
             target["skills"],
+            order=config["ORDER"],
         )
         resume.build(build_name(target))
         # print(json.dumps(complete_resume_obj, indent=2))

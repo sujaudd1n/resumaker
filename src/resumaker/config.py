@@ -5,7 +5,10 @@ import yaml
 from resumaker.utils import read_file_txt, render_yaml_txt, is_config_valid
 
 CONFIG_FILENAME = "config.yml"
-default_configs = {"RESUME_FILENAME": ["resume.yml", "resume.yaml"]}
+default_configs = {
+    "RESUME_FILENAME": ["resume.yml", "resume.yaml"],
+    "ORDER": ["summary", "education", "skills", "links"],
+}
 
 
 def get_config():

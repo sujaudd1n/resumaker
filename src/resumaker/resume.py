@@ -7,7 +7,9 @@ from resumaker.template import template
 
 
 class Resume:
-    def __init__(self, name, location, contact, summary, education, links, skills):
+    def __init__(
+        self, name, location, contact, summary, education, links, skills, order
+    ):
         self.contact = Contact(name, location, contact)
         self.summary = Summary(summary)
         self.education = Education(education)
@@ -22,7 +24,8 @@ class Resume:
             self.contact.generate_tex(),
         ]
 
-        self.internal_sections = [self.summary, self.education, self.skills, self.links]
+        # self.internal_sections = [self.summary, self.education, self.skills, self.links]
+        self.internal_sections = order
 
     def generate_tex(self):
         all_sections_tex_list = []
@@ -31,12 +34,14 @@ class Resume:
 
         internal_sections_tex_list = []
         for section in self.internal_sections:
-            tex = section.generate_tex()
+            tex = getattr(self, section).generate_tex()
             internal_sections_tex_list.append(tex)
 
         internal_tex_template = Template(template["main"])
         internal_tex_str = "\n".join(internal_sections_tex_list)
-        rendered_internal_tex = internal_tex_template.substitute(CONTENT=internal_tex_str)
+        rendered_internal_tex = internal_tex_template.substitute(
+            CONTENT=internal_tex_str
+        )
 
         all_sections_tex_list.append(rendered_internal_tex)
 
@@ -111,6 +116,7 @@ class Summary:
     def __str__(self):
         return f"{self.title}"
 
+
 class Education:
     def __init__(self, education):
         self.education = education
@@ -123,28 +129,26 @@ class Education:
         single_education_tex_list = []
         for institute in self.education:
             acheivement_tex = []
-            for acheivement in institute['acheivements']:
+            for acheivement in institute["acheivements"]:
                 ra = acheivement_tex_template.substitute(single_acheivement=acheivement)
-                acheivement_tex.append(
-                    ra
-                )
+                acheivement_tex.append(ra)
             single_education_tex = single_education_tex_template.substitute(
-                institution_name=institute['name'],
-                duration=institute['duration'],
-                degree=institute['degree'],
-                institution_location=institute['location'],
-                all_acheivements=''.join(acheivement_tex)
-        )
+                institution_name=institute["name"],
+                duration=institute["duration"],
+                degree=institute["degree"],
+                institution_location=institute["location"],
+                all_acheivements="".join(acheivement_tex),
+            )
             single_education_tex_list.append(single_education_tex)
-        
-        all_education = '\n'.join(single_education_tex_list)
-        all_education_tex = education_tex_template.substitute(all_education=all_education)
+
+        all_education = "\n".join(single_education_tex_list)
+        all_education_tex = education_tex_template.substitute(
+            all_education=all_education
+        )
         return all_education_tex
 
     def __str__(self):
         return f"{self.education[0].name}"
-
-
 
 
 class Links:

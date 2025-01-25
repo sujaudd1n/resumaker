@@ -91,12 +91,12 @@ class TestMergeUserConfigWithDefaults:
     @pytest.mark.fixture_data({"RESUME_FILENAME": "custom.yml"})
     def test_when_overwritten_with_string(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
-        assert config == {"RESUME_FILENAME": ["custom.yml"]}
+        assert config["RESUME_FILENAME"] == ["custom.yml"]
 
     @pytest.mark.fixture_data({"RESUME_FILENAME": ["custom.yml"]})
     def test_when_overwritten_with_list(self, apply_user_config_obj, mocker):
         config = merge_user_config_with_defaults(apply_user_config_obj)
-        assert config == {"RESUME_FILENAME": ["custom.yml"]}
+        assert config["RESUME_FILENAME"] == ["custom.yml"]
 
     @pytest.mark.fixture_data({"custom_config": ["custom_value"]})
     def test_ignore_unsupported_config(self, apply_user_config_obj, mocker):
