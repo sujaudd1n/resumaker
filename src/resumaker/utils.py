@@ -8,6 +8,7 @@ common_fields = {
     "contact": dict,
     "education": list,
     "links": dict,
+    "skills": dict,
 }
 
 

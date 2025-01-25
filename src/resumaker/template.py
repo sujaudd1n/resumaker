@@ -47,11 +47,15 @@ $CONTENT
     "education": {
         "complete": r"""
     \begin{rSection}{Education}
-        \textbf{$institution_name} \hfill \textit{$duration} \\ 
-        $institution_location
-        $all_acheivements
+        $all_education
     \end{rSection}""",
-        "single": r"$single_acheivement \\",
+        "single": r"""
+
+        \textbf{$degree} \hfill \textit{$duration} \\ 
+        $institution_name, $institution_location \\
+        $all_acheivements
+        """,
+        "acheivement": r"$single_acheivement \\",
     },
     "links": {
         "complete": r"""

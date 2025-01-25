@@ -3,17 +3,17 @@ import os
 import shutil
 from pathlib import Path
 from string import Template
-from .template import template
+from resumaker.template import template
 
 
 class Resume:
-    def __init__(self, name, location, contact, summary, links, skills):
+    def __init__(self, name, location, contact, summary, education, links, skills):
         self.contact = Contact(name, location, contact)
         self.summary = Summary(summary)
+        self.education = Education(education)
         self.skills = Skills(skills)
         # self.work_experience = WorkExperience()
         # self.projects = Project()
-        # self.education = Education()
         self.links = Links(links)
 
         self.setup_sections = [
@@ -22,7 +22,7 @@ class Resume:
             self.contact.generate_tex(),
         ]
 
-        self.internal_sections = [self.summary, self.skills, self.links]
+        self.internal_sections = [self.summary, self.education, self.skills, self.links]
 
     def generate_tex(self):
         all_sections_tex_list = []
@@ -46,7 +46,6 @@ class Resume:
         filepath = Path(__file__).parent.parent.parent.joinpath(
             f"templates/{filename}.tex"
         )
-        print(filepath)
         with open(filepath, "w") as f:
             text = self.generate_tex()
             f.write(text)
@@ -59,8 +58,7 @@ class Resume:
         old_cwd = os.getcwd()
         newdir = os.path.dirname(filepath)
         os.chdir(newdir)
-        cmpr = subprocess.run(["pdflatex", filepath])
-        print(cmpr.returncode)
+        cmpr = subprocess.run(["pdflatex", "-interaction=batchmode", filepath])
         # if cmpr.returncode != 0:
         # raise Exception
         shutil.move(filename + ".pdf", os.path.join(old_cwd, filename + ".pdf"))
@@ -113,6 +111,41 @@ class Summary:
     def __str__(self):
         return f"{self.title}"
 
+class Education:
+    def __init__(self, education):
+        self.education = education
+
+    def generate_tex(self):
+        education_tex_template = Template(template["education"]["complete"])
+        single_education_tex_template = Template(template["education"]["single"])
+        acheivement_tex_template = Template(template["education"]["acheivement"])
+
+        single_education_tex_list = []
+        for institute in self.education:
+            acheivement_tex = []
+            for acheivement in institute['acheivements']:
+                ra = acheivement_tex_template.substitute(single_acheivement=acheivement)
+                acheivement_tex.append(
+                    ra
+                )
+            single_education_tex = single_education_tex_template.substitute(
+                institution_name=institute['name'],
+                duration=institute['duration'],
+                degree=institute['degree'],
+                institution_location=institute['location'],
+                all_acheivements=''.join(acheivement_tex)
+        )
+            single_education_tex_list.append(single_education_tex)
+        
+        all_education = '\n'.join(single_education_tex_list)
+        all_education_tex = education_tex_template.substitute(all_education=all_education)
+        return all_education_tex
+
+    def __str__(self):
+        return f"{self.education[0].name}"
+
+
+
 
 class Links:
     def __init__(self, links):
@@ -122,7 +155,6 @@ class Links:
         links_complete_tex_template = Template(template["links"]["complete"])
         single_tex = []
         for link_name, link_content in self.links.items():
-            print(link_name, link_content)
             links_single_tex_template = Template(template["links"]["single"])
             single_tex.append(
                 links_single_tex_template.substitute(
@@ -134,7 +166,6 @@ class Links:
         links_tex = links_complete_tex_template.substitute(
             all_links="\n".join(single_tex)
         )
-        print(links_tex)
         return links_tex
 
     def __str__(self):

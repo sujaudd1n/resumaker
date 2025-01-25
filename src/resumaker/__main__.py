@@ -74,6 +74,7 @@ def main():
             target["location"],
             target["contact"],
             target["summary"],
+            target["education"],
             target["links"],
             target["skills"],
         )
