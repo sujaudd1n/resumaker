@@ -16,28 +16,31 @@ class Resume:
         # self.education = Education()
         self.links = Links(links)
 
+        self.setup_sections = [
+            template["license"],
+            template["setup"],
+            self.contact.generate_tex(),
+        ]
+
+        self.internal_sections = [self.summary, self.skills, self.links]
+
     def generate_tex(self):
-        chunks = []
+        all_sections_tex_list = []
+        for section in self.setup_sections:
+            all_sections_tex_list.append(section)
 
-        chunks.append(template["license"])
-        chunks.append(template["setup"])
-        contact_tex = self.contact.generate_tex()
-        chunks.append(contact_tex)
+        internal_sections_tex_list = []
+        for section in self.internal_sections:
+            tex = section.generate_tex()
+            internal_sections_tex_list.append(tex)
 
-        internal_chunks = []
-        summary_tex = self.summary.generate_tex()
-        internal_chunks.append(summary_tex)
-        skills_tex = self.skills.generate_tex()
-        internal_chunks.append(skills_tex)
-        links_tex = self.links.generate_tex()
-        internal_chunks.append(links_tex)
+        internal_tex_template = Template(template["main"])
+        internal_tex_str = "\n".join(internal_sections_tex_list)
+        rendered_internal_tex = internal_tex_template.substitute(CONTENT=internal_tex_str)
 
-        main_content_str = "\n".join(internal_chunks)
-        main_tex_template = Template(template["main"])
-        main_tex = main_tex_template.substitute(CONTENT=main_content_str)
-        chunks.append(main_tex)
+        all_sections_tex_list.append(rendered_internal_tex)
 
-        return "\n".join(chunks)
+        return "\n".join(all_sections_tex_list)
 
     def write_tex(self, filename):
         filepath = Path(__file__).parent.parent.parent.joinpath(
