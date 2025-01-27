@@ -1,4 +1,4 @@
-class Template:
+class ResumeTemplate:
     "An interface between resume and actual template string."
 
     def __init__(

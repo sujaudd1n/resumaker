@@ -4,7 +4,10 @@ import shutil
 from pathlib import Path
 from string import Template
 from resumaker.template_str import template
+from resumaker.config import get_config
 
+config = get_config()
+BASE_DIR = config["BASE_DIR"]
 
 class Resume:
     def __init__(
@@ -58,7 +61,7 @@ class Resume:
         return "\n".join(all_sections_tex_list)
 
     def write_tex(self, filename):
-        filepath = Path(__file__).parent.parent.parent.joinpath(
+        filepath = BASE_DIR.joinpath(
             f"templates/{filename}.tex"
         )
         with open(filepath, "w") as f:
@@ -67,7 +70,7 @@ class Resume:
 
     def build(self, filename):
         self.write_tex(filename)
-        filepath = Path(__file__).parent.parent.parent.joinpath(
+        filepath = BASE_DIR.joinpath(
             f"templates/{filename}.tex"
         )
         old_cwd = os.getcwd()
