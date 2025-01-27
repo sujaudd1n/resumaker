@@ -17,6 +17,7 @@ class Resume:
         links,
         skills,
         work_experience,
+        projects,
         order,
     ):
         self.contact = Contact(name, location, contact)
@@ -24,7 +25,7 @@ class Resume:
         self.education = Education(education)
         self.skills = Skills(skills)
         self.work_experience = WorkExperience(work_experience)
-        # self.projects = Project()
+        self.projects = Project(projects)
         self.links = Links(links)
 
         self.setup_sections = [
@@ -184,6 +185,7 @@ class Links:
     def __str__(self):
         return f"{self.title}"
 
+
 class Skills:
     def __init__(self, skills):
         self.skills = skills
@@ -215,17 +217,19 @@ class WorkExperience:
     def generate_tex(self):
         we_complete_tex_template = Template(template["work_experience"]["complete"])
         we_single_tex_template = Template(template["work_experience"]["single"])
-        contribution_tex_template = Template(template["work_experience"]["single-contribution"])
-        
+        contribution_tex_template = Template(
+            template["work_experience"]["single-contribution"]
+        )
+
         single_tex = []
         for experience in self.work_experience:
-            company_name = experience['company-name']
-            company_location = experience['location']
-            position = experience['position']
-            duration = experience['duration']
+            company_name = experience["company-name"]
+            company_location = experience["location"]
+            position = experience["position"]
+            duration = experience["duration"]
 
             contribution_tex = []
-            for contribution in experience['contributions']:
+            for contribution in experience["contributions"]:
                 contribution_tex.append(
                     contribution_tex_template.substitute(contribution=contribution)
                 )
@@ -236,7 +240,7 @@ class WorkExperience:
                     company_location=company_location,
                     position=position,
                     duration=duration,
-                    all_contributions= '\n'.join(contribution_tex)
+                    all_contributions="\n".join(contribution_tex),
                 )
             )
 
@@ -245,3 +249,40 @@ class WorkExperience:
         )
 
         return we_tex
+
+
+class Project:
+    def __init__(self, projects):
+        self.projects = projects
+
+    def generate_tex(self):
+        project_complete_tex_template = Template(template["projects"]["complete"])
+        project_single_tex_template = Template(template["projects"]["single"])
+        detail_tex_template = Template(
+            template["projects"]["single-detail"]
+        )
+
+        single_tex = []
+        for project in self.projects:
+            project_name = project["name"]
+            technologies = ', '.join(project["techstack"])
+
+            detail_tex = []
+            for detail in project["details"]:
+                detail_tex.append(
+                    detail_tex_template.substitute(detail=detail)
+                )
+
+            single_tex.append(
+                project_single_tex_template.substitute(
+                    project_name=project_name,
+                    technologies=technologies,
+                    all_details="\n".join(detail_tex),
+                )
+            )
+
+        project_tex = project_complete_tex_template.substitute(
+            all_projects="\n".join(single_tex)
+        )
+
+        return project_tex

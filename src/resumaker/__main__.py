@@ -53,7 +53,7 @@ def main():
 
     if resume_target:
         if resume_target in given_targets:
-            target_details = [complete_resume_obj[resume_target] | common]
+            target_details = [complete_resume_obj[resume_target] | {"target_name": resume_target} | common]
         else:
             sys.exit("Target is not in the resume")
     else:
@@ -64,6 +64,7 @@ def main():
             )
 
     def build_name(target):
+        print(target["target_name"])
         user_name = target["name"].replace(" ", "").lower()
         target_name = target["target_name"]
         return f"{user_name}-{target_name}"
@@ -78,6 +79,7 @@ def main():
             target["links"],
             target["skills"],
             target["work-experience"],
+            target["projects"],
             order=config["ORDER"],
         )
         resume.build(build_name(target))
