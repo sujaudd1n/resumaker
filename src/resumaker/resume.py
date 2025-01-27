@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 from string import Template
-from resumaker.template import template
+from resumaker.template_str import template
 
 
 class Resume:
@@ -258,20 +258,16 @@ class Project:
     def generate_tex(self):
         project_complete_tex_template = Template(template["projects"]["complete"])
         project_single_tex_template = Template(template["projects"]["single"])
-        detail_tex_template = Template(
-            template["projects"]["single-detail"]
-        )
+        detail_tex_template = Template(template["projects"]["single-detail"])
 
         single_tex = []
         for project in self.projects:
             project_name = project["name"]
-            technologies = ', '.join(project["techstack"])
+            technologies = ", ".join(project["techstack"])
 
             detail_tex = []
             for detail in project["details"]:
-                detail_tex.append(
-                    detail_tex_template.substitute(detail=detail)
-                )
+                detail_tex.append(detail_tex_template.substitute(detail=detail))
 
             single_tex.append(
                 project_single_tex_template.substitute(

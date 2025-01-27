@@ -53,7 +53,11 @@ def main():
 
     if resume_target:
         if resume_target in given_targets:
-            target_details = [complete_resume_obj[resume_target] | {"target_name": resume_target} | common]
+            target_details = [
+                complete_resume_obj[resume_target]
+                | {"target_name": resume_target}
+                | common
+            ]
         else:
             sys.exit("Target is not in the resume")
     else:

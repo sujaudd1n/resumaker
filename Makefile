@@ -5,7 +5,7 @@ install:
 build-install:
 	make build
 	make install
-format:
+fmt:
 	black src/
 	black tests/
 lint:
