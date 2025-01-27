@@ -6,6 +6,7 @@ from resumaker.utils import is_resume_valid, common_fields
 from resumaker.render_resume import *
 from resumaker.models.resume import Resume
 from resumaker.__about__ import __version__
+
 # from resumaker.template import ResumeTemplate
 
 

@@ -5,15 +5,17 @@ from pathlib import Path
 
 from resumaker.utils import read_file_txt, render_yaml_txt, is_config_valid
 
+
 def get_base_dir():
     path = Path(__file__).resolve().parent
     return path
+
 
 CONFIG_FILENAME = "config.yml"
 default_configs = {
     "RESUME_FILENAME": ["resume.yml", "resume.yaml"],
     "ORDER": ["summary", "education", "skills", "work_experience", "projects", "links"],
-    "BASE_DIR": get_base_dir()
+    "BASE_DIR": get_base_dir(),
 }
 
 

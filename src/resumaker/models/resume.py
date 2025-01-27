@@ -5,9 +5,11 @@ from pathlib import Path
 from string import Template
 from resumaker.template_str import template
 from resumaker.config import get_config
+from resumaker.models.template import ContactTemplate
 
 config = get_config()
 BASE_DIR = config["BASE_DIR"]
+
 
 class Resume:
     def __init__(
@@ -61,18 +63,14 @@ class Resume:
         return "\n".join(all_sections_tex_list)
 
     def write_tex(self, filename):
-        filepath = BASE_DIR.joinpath(
-            f"templates/{filename}.tex"
-        )
+        filepath = BASE_DIR.joinpath(f"templates/{filename}.tex")
         with open(filepath, "w") as f:
             text = self.generate_tex()
             f.write(text)
 
     def build(self, filename):
         self.write_tex(filename)
-        filepath = BASE_DIR.joinpath(
-            f"templates/{filename}.tex"
-        )
+        filepath = BASE_DIR.joinpath(f"templates/{filename}.tex")
         old_cwd = os.getcwd()
         newdir = os.path.dirname(filepath)
         os.chdir(newdir)
@@ -98,6 +96,7 @@ class Contact:
         self.github = contact["github"]
 
     def generate_tex(self):
+        # contactTemplate = ContactTemplate()
         template_str = Template(template["contact"])
         result = template_str.substitute(
             name=self.name,

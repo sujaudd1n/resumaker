@@ -1,3 +1,5 @@
+from string import Template
+
 class ResumeTemplate:
     "An interface between resume and actual template string."
 
@@ -24,11 +26,11 @@ class ResumeTemplate:
 
 
 class ContactTemplate:
-    def __init__(self, contact):
-        self.contact = contact
+    def __init__(self, contact_tex):
+        self.contact_tex = contact_tex
 
     def get_tex(self):
-        pass
+        return self.contact_tex
 
-    def render_tex(self):
-        pass
+    def render_tex(self, values):
+        return Template(self.contact_tex.substitute(values))
