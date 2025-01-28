@@ -106,6 +106,9 @@ class Summary:
         self.text = summary["text"]
 
     def generate_tex(self):
+        self.template.get_tex("summary", self.values["summary"])
+
+    def generate_tex(self):
         summary_tex_template = Template(template["summary"])
         summary_tex = summary_tex_template.substitute(
             title=self.title,

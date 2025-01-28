@@ -48,5 +48,16 @@ class ContactTemplate:
         )
         return result
 
-    def get_tex(self):
-        return self.contact_tex
+
+class SummaryTemplate:
+    def __init__(self, values, template):
+        self.values = values
+        self.template = template
+
+    def render_tex(self):
+        pyTemplate = Template(self.template)
+        result = pyTemplate.substitute(
+            title=self.values["title"],
+            text=self.values["text"],
+        )
+        return result

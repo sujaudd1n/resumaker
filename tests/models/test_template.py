@@ -1,5 +1,5 @@
 import pytest
-from resumaker.models.template import ResumeTemplate, ContactTemplate
+from resumaker.models.template import *
 from .tex_template import tex_template
 
 
@@ -29,3 +29,20 @@ class TestContactTemplate:
     def test_render_tex(self, contactObj):
         tex = contactObj.render_tex()
         assert tex == "testlocationphoneemaillinkedingithub"
+
+
+class TestSummaryTemplate:
+    @pytest.fixture
+    def summaryObj(self):
+        values = {
+            "title": "summary title",
+            "text": "summary text",
+        }
+        template = "$title $text"
+
+        summaryTemplate = SummaryTemplate(values, template)
+        return summaryTemplate
+
+    def test_render_tex(self, summaryObj):
+        tex = summaryObj.render_tex()
+        assert tex == "summary title summary text"
