@@ -53,10 +53,10 @@ education:
     \end{rSection}
   single:
     \textbf{$degree} \hfill \textit{$duration} \\
-    $institution_name,
-    $institution_location \\
+    $name,
+    $location \\
     $all_acheivements
-  acheivement: $single_acheivement \\
+  acheivement: $acheivement \\
 links:
   complete:
     \begin{rSection}{Links} \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l

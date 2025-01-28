@@ -69,27 +69,27 @@ class EducationTemplate:
         self.template = template
 
     def render_tex(self):
-        education_tex_template = Template(template["education"]["complete"])
-        single_education_tex_template = Template(template["education"]["single"])
-        acheivement_tex_template = Template(template["education"]["acheivement"])
+        py_complete_template = Template(self.template["complete"])
+        py_single_template = Template(self.template["single"])
+        py_acheivement_template = Template(self.template["acheivement"])
 
-        single_education_tex_list = []
-        for institute in self.education:
-            acheivement_tex = []
+        rendered_single_educations = []
+        for institute in self.values:
+            rendered_acheivements = []
             for acheivement in institute["acheivements"]:
-                ra = acheivement_tex_template.substitute(single_acheivement=acheivement)
-                acheivement_tex.append(ra)
-            single_education_tex = single_education_tex_template.substitute(
-                institution_name=institute["name"],
+                rendered_acheivement = py_acheivement_template.substitute(acheivement=acheivement)
+                rendered_acheivements.append(rendered_acheivement)
+            rendered_single_education = py_single_template.substitute(
+                name=institute["name"],
                 duration=institute["duration"],
                 degree=institute["degree"],
-                institution_location=institute["location"],
-                all_acheivements="".join(acheivement_tex),
+                location=institute["location"],
+                all_acheivements=" ".join(rendered_acheivements),
             )
-            single_education_tex_list.append(single_education_tex)
+            rendered_single_educations.append(rendered_single_education)
 
-        all_education = "\n".join(single_education_tex_list)
-        all_education_tex = education_tex_template.substitute(
-            all_education=all_education
+        all_educations = "\n".join(rendered_single_educations)
+        rendered_complete_education = py_complete_template.substitute(
+            all_educations=all_educations
         )
-        return all_education_tex
+        return rendered_complete_education

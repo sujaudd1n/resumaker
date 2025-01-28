@@ -63,7 +63,7 @@ class TestEducationTemplate:
                 "name": "CLGY2",
                 "location": "LOCX2",
                 "degree": "DEGZ2",
-                "duration": "DUR33",
+                "duration": "DUR32",
                 "acheivements": ["A12", "A22", "A32"],
             },
         ]
@@ -79,5 +79,5 @@ class TestEducationTemplate:
     def test_render_tex(self, summaryObj):
         tex = summaryObj.render_tex()
         assert tex == (
-            "S DEGZ DUR3 CLGY LOCX A1 A2 A3 DEGZ2 DUR32 CLGY2 LOCX2 A12 A22 A32 S"
+            "S DEGZ DUR3 CLGY LOCX A1 A2 A3\nDEGZ2 DUR32 CLGY2 LOCX2 A12 A22 A32 E"
         )
