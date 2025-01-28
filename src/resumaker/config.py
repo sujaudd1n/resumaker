@@ -17,6 +17,7 @@ default_configs = {
     "ORDER": ["summary", "education", "skills", "work_experience", "projects", "links"],
     "BASE_DIR": get_base_dir(),
 }
+BASE_DIR = get_base_dir()
 
 
 def get_config():

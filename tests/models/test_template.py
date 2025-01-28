@@ -1,19 +1,18 @@
 import pytest
-from resumaker.models.template import ContactTemplate
+from resumaker.models.template import ResumeTemplate, ContactTemplate
 from .tex_template import tex_template
+
+
+class TestResumeTemplate:
+    def test_template_import(self):
+        resumeTemplate = ResumeTemplate("t1")
+        template_dict = resumeTemplate.get_template_obj()
+        assert type(template_dict) == dict
 
 
 class TestContactTemplate:
     @pytest.fixture
-    def contactTemplate(self):
-        contactTemplate = ContactTemplate(tex_template["contact"])
-        return contactTemplate
-
-    def test_get_tex(self, contactTemplate):
-        tex = contactTemplate.get_tex()
-        assert tex == tex_template["contact"]
-
-    def test_render_tex(self, contactTemplate):
+    def contactObj(self):
         values = {
             "name": "test",
             "location": "location",
@@ -22,12 +21,11 @@ class TestContactTemplate:
             "linkedin": "linkedin",
             "github": "github",
         }
-        tex = contactTemplate.render_tex(values)
-        assert (
-            tex
-            == r"""
-\name{test}
-\address{location}
-\address{\raisebox{-2px}{\includegraphics[width=10px]{icons/phone.png}}  phone \\ \raisebox{-2px}{\includegraphics[width=10px]{icons/mail.png}} email  \\ \raisebox{-2px}{\includegraphics[width=10px]{icons/linkedin.png}} \href{https://www.linkedin.com/in/linkedin/}{linkedin.com/in/linkedin} \\ \raisebox{-2px}{\includegraphics[width=10px]{icons/github.png}} \href{https://github.com/github}{github.com/github}}
-"""
-        )
+        template = "$name$location$phone$email$linkedin$github"
+
+        contactTemplate = ContactTemplate(values, template)
+        return contactTemplate
+
+    def test_render_tex(self, contactObj):
+        tex = contactObj.render_tex()
+        assert tex == "testlocationphoneemaillinkedingithub"

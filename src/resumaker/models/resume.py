@@ -14,29 +14,35 @@ BASE_DIR = config["BASE_DIR"]
 class Resume:
     def __init__(
         self,
-        name,
-        location,
-        contact,
-        summary,
-        education,
-        links,
-        skills,
-        work_experience,
-        projects,
+        values,
+        template,
+        /,
         order,
+        # name,
+        # location,
+        # contact,
+        # summary,
+        # education,
+        # links,
+        # skills,
+        # work_experience,
+        # projects,
     ):
+        self.values = values
+        self.template = template
+
         self.contact = Contact(name, location, contact)
-        self.summary = Summary(summary)
-        self.education = Education(education)
-        self.skills = Skills(skills)
-        self.work_experience = WorkExperience(work_experience)
-        self.projects = Project(projects)
-        self.links = Links(links)
+        # self.summary = Summary(summary)
+        # self.education = Education(education)
+        # self.skills = Skills(skills)
+        # self.work_experience = WorkExperience(work_experience)
+        # self.projects = Project(projects)
+        # self.links = Links(links)
 
         self.setup_sections = [
-            template["license"],
-            template["setup"],
-            self.contact.generate_tex(),
+            self.template.get_license(),
+            self.template.get_preamble(),
+            self.template.get_contact(),
         ]
 
         # self.internal_sections = [self.summary, self.education, self.skills, self.links]
@@ -87,29 +93,11 @@ class Resume:
 
 
 class Contact:
-    def __init__(self, name, location, contact):
-        self.name = name
-        self.location = location
-        self.phone = contact["phone"]
-        self.email = contact["email"]
-        self.linkedin = contact["linkedin"]
-        self.github = contact["github"]
+    def __init__(self):
+        pass
 
     def generate_tex(self):
-        # contactTemplate = ContactTemplate()
-        template_str = Template(template["contact"])
-        result = template_str.substitute(
-            name=self.name,
-            location=self.location,
-            phone=self.phone,
-            email=self.email,
-            linkedin=self.linkedin,
-            github=self.github,
-        )
-        return result
-
-    def __str__(self):
-        return f"{self.phone}"
+        self.template.get_tex("contact", self.values["contact"])
 
 
 class Summary:
