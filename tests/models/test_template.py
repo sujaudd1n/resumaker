@@ -46,3 +46,38 @@ class TestSummaryTemplate:
     def test_render_tex(self, summaryObj):
         tex = summaryObj.render_tex()
         assert tex == "summary title summary text"
+
+
+class TestEducationTemplate:
+    @pytest.fixture
+    def summaryObj(self):
+        values = [
+            {
+                "name": "CLGY",
+                "location": "LOCX",
+                "degree": "DEGZ",
+                "duration": "DUR3",
+                "acheivements": ["A1", "A2", "A3"],
+            },
+            {
+                "name": "CLGY2",
+                "location": "LOCX2",
+                "degree": "DEGZ2",
+                "duration": "DUR33",
+                "acheivements": ["A12", "A22", "A32"],
+            },
+        ]
+        template = {
+            "complete": "S $all_educations E",
+            "single": "$degree $duration $name $location $all_acheivements",
+            "acheivement": "$acheivement",
+        }
+
+        educationTemplate = EducationTemplate(values, template)
+        return educationTemplate
+
+    def test_render_tex(self, summaryObj):
+        tex = summaryObj.render_tex()
+        assert tex == (
+            "S DEGZ DUR3 CLGY LOCX A1 A2 A3 DEGZ2 DUR32 CLGY2 LOCX2 A12 A22 A32 S"
+        )

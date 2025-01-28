@@ -61,3 +61,35 @@ class SummaryTemplate:
             text=self.values["text"],
         )
         return result
+
+
+class EducationTemplate:
+    def __init__(self, values, template):
+        self.values = values
+        self.template = template
+
+    def render_tex(self):
+        education_tex_template = Template(template["education"]["complete"])
+        single_education_tex_template = Template(template["education"]["single"])
+        acheivement_tex_template = Template(template["education"]["acheivement"])
+
+        single_education_tex_list = []
+        for institute in self.education:
+            acheivement_tex = []
+            for acheivement in institute["acheivements"]:
+                ra = acheivement_tex_template.substitute(single_acheivement=acheivement)
+                acheivement_tex.append(ra)
+            single_education_tex = single_education_tex_template.substitute(
+                institution_name=institute["name"],
+                duration=institute["duration"],
+                degree=institute["degree"],
+                institution_location=institute["location"],
+                all_acheivements="".join(acheivement_tex),
+            )
+            single_education_tex_list.append(single_education_tex)
+
+        all_education = "\n".join(single_education_tex_list)
+        all_education_tex = education_tex_template.substitute(
+            all_education=all_education
+        )
+        return all_education_tex

@@ -47,11 +47,16 @@ contact:
   \raisebox{-2px}{\includegraphics[width=10px]{icons/github.png}}
   \href{https://github.com/$github}{github.com/$github}}
 education:
-  complete: \begin{rSection}{Education} $all_education \end{rSection}
+  complete:
+    \begin{rSection}{Education}
+        $all_educations
+    \end{rSection}
   single:
-    \textbf{$degree} \hfill \textit{$duration} \\ $institution_name,
-    $institution_location \\ $all_acheivements
-  acheivement: $single_acheivement \
+    \textbf{$degree} \hfill \textit{$duration} \\
+    $institution_name,
+    $institution_location \\
+    $all_acheivements
+  acheivement: $single_acheivement \\
 links:
   complete:
     \begin{rSection}{Links} \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l

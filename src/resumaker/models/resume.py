@@ -93,65 +93,18 @@ class Resume:
 
 
 class Contact:
-    def __init__(self):
-        pass
-
     def generate_tex(self):
         self.template.get_tex("contact", self.values["contact"])
 
 
 class Summary:
-    def __init__(self, summary):
-        self.title = summary["title"]
-        self.text = summary["text"]
-
     def generate_tex(self):
         self.template.get_tex("summary", self.values["summary"])
 
-    def generate_tex(self):
-        summary_tex_template = Template(template["summary"])
-        summary_tex = summary_tex_template.substitute(
-            title=self.title,
-            text=self.text,
-        )
-        return summary_tex
-
-    def __str__(self):
-        return f"{self.title}"
-
 
 class Education:
-    def __init__(self, education):
-        self.education = education
-
     def generate_tex(self):
-        education_tex_template = Template(template["education"]["complete"])
-        single_education_tex_template = Template(template["education"]["single"])
-        acheivement_tex_template = Template(template["education"]["acheivement"])
-
-        single_education_tex_list = []
-        for institute in self.education:
-            acheivement_tex = []
-            for acheivement in institute["acheivements"]:
-                ra = acheivement_tex_template.substitute(single_acheivement=acheivement)
-                acheivement_tex.append(ra)
-            single_education_tex = single_education_tex_template.substitute(
-                institution_name=institute["name"],
-                duration=institute["duration"],
-                degree=institute["degree"],
-                institution_location=institute["location"],
-                all_acheivements="".join(acheivement_tex),
-            )
-            single_education_tex_list.append(single_education_tex)
-
-        all_education = "\n".join(single_education_tex_list)
-        all_education_tex = education_tex_template.substitute(
-            all_education=all_education
-        )
-        return all_education_tex
-
-    def __str__(self):
-        return f"{self.education[0].name}"
+        self.template.get_tex("education", self.values["education"])
 
 
 class Links:
