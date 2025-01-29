@@ -172,3 +172,32 @@ class TestWorkExperienceTemplate:
     def test_render_tex(self, work_experience_obj):
         tex = work_experience_obj.render_tex()
         assert tex == ("C1 L1 R1 D1 C1\nC2\nC3\nC2 L2 R2 D2 C4\nC5\nC6")
+
+
+class TestProjectTemplate:
+    @pytest.fixture
+    def project_obj(self):
+        values = [
+            {
+                "name": "P1",
+                "techstack": ["T1", "T2", "T3"],
+                "details": ["D1", "D2", "D3"],
+            },
+            {
+                "name": "P2",
+                "techstack": ["T1", "T2", "T3"],
+                "details": ["D1", "D2", "D3"],
+            },
+        ]
+        template = {
+            "complete": "$all_projects",
+            "single": "$project_name $techstack $all_details",
+            "single-detail": "$detail",
+        }
+
+        project_template = ProjectTemplate(values, template)
+        return project_template
+
+    def test_render_tex(self, project_obj):
+        tex = project_obj.render_tex()
+        assert tex == ("P1 T1, T2, T3 D1\nD2\nD3\nP2 T1, T2, T3 D1\nD2\nD3")

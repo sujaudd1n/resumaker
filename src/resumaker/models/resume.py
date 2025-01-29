@@ -119,9 +119,6 @@ class Skills:
 class WorkExperience:
     pass
 
-    def __init__(self, work_experience):
-        self.work_experience = work_experience
-
 
 class Project:
     pass

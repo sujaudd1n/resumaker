@@ -175,3 +175,8 @@ class WorkExperienceTemplate(ResumeSectionTemplate):
         )
 
         return all_experiences
+
+
+class ProjectTemplate(ResumeSectionTemplate):
+    def render_tex(self):
+        return ""
