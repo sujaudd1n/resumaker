@@ -31,11 +31,13 @@ class ResumeTemplate:
         pass
 
 
-class ContactTemplate:
+class ResumeSectionTemplate:
     def __init__(self, values, template):
         self.values = values
         self.template = template
 
+
+class ContactTemplate(ResumeSectionTemplate):
     def render_tex(self):
         pyTemplate = Template(self.template)
         result = pyTemplate.substitute(
@@ -49,11 +51,7 @@ class ContactTemplate:
         return result
 
 
-class SummaryTemplate:
-    def __init__(self, values, template):
-        self.values = values
-        self.template = template
-
+class SummaryTemplate(ResumeSectionTemplate):
     def render_tex(self):
         pyTemplate = Template(self.template)
         result = pyTemplate.substitute(
@@ -63,11 +61,7 @@ class SummaryTemplate:
         return result
 
 
-class EducationTemplate:
-    def __init__(self, values, template):
-        self.values = values
-        self.template = template
-
+class EducationTemplate(ResumeSectionTemplate):
     def render_tex(self):
         py_complete_template = Template(self.template["complete"])
         py_single_template = Template(self.template["single"])
@@ -77,7 +71,9 @@ class EducationTemplate:
         for institute in self.values:
             rendered_acheivements = []
             for acheivement in institute["acheivements"]:
-                rendered_acheivement = py_acheivement_template.substitute(acheivement=acheivement)
+                rendered_acheivement = py_acheivement_template.substitute(
+                    acheivement=acheivement
+                )
                 rendered_acheivements.append(rendered_acheivement)
             rendered_single_education = py_single_template.substitute(
                 name=institute["name"],
@@ -93,3 +89,7 @@ class EducationTemplate:
             all_educations=all_educations
         )
         return rendered_complete_education
+
+
+class LinksTemplate(ResumeSectionTemplate):
+    pass
