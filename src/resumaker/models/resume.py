@@ -122,42 +122,6 @@ class WorkExperience:
     def __init__(self, work_experience):
         self.work_experience = work_experience
 
-    def generate_tex(self):
-        we_complete_tex_template = Template(template["work_experience"]["complete"])
-        we_single_tex_template = Template(template["work_experience"]["single"])
-        contribution_tex_template = Template(
-            template["work_experience"]["single-contribution"]
-        )
-
-        single_tex = []
-        for experience in self.work_experience:
-            company_name = experience["company-name"]
-            company_location = experience["location"]
-            position = experience["position"]
-            duration = experience["duration"]
-
-            contribution_tex = []
-            for contribution in experience["contributions"]:
-                contribution_tex.append(
-                    contribution_tex_template.substitute(contribution=contribution)
-                )
-
-            single_tex.append(
-                we_single_tex_template.substitute(
-                    company_name=company_name,
-                    company_location=company_location,
-                    position=position,
-                    duration=duration,
-                    all_contributions="\n".join(contribution_tex),
-                )
-            )
-
-        we_tex = we_complete_tex_template.substitute(
-            all_work_experiences="\n".join(single_tex)
-        )
-
-        return we_tex
-
 
 class Project:
     pass

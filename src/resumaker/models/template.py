@@ -143,4 +143,35 @@ class SkillsTemplate(ResumeSectionTemplate):
 
 class WorkExperienceTemplate(ResumeSectionTemplate):
     def render_tex(self):
-        return ""
+        complete_template = Template(self.template["complete"])
+        single_template = Template(self.template["single"])
+        contribution_template = Template(self.template["single-contribution"])
+
+        rendered_single = []
+        for experience in self.values:
+            company_name = experience["company-name"]
+            company_location = experience["location"]
+            position = experience["role"]
+            duration = experience["duration"]
+
+            rendered_contributions = []
+            for contribution in experience["contributions"]:
+                rendered_contributions.append(
+                    contribution_template.substitute(contribution=contribution)
+                )
+
+            rendered_single.append(
+                single_template.substitute(
+                    company_name=company_name,
+                    location=company_location,
+                    role=position,
+                    duration=duration,
+                    all_contributions="\n".join(rendered_contributions),
+                )
+            )
+
+        all_experiences = complete_template.substitute(
+            all_work_experiences="\n".join(rendered_single)
+        )
+
+        return all_experiences
