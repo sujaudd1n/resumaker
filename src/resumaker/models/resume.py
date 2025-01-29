@@ -108,25 +108,8 @@ class Education:
 
 
 class Links:
-    def __init__(self, links):
-        self.links = links
-
     def generate_tex(self):
-        links_complete_tex_template = Template(template["links"]["complete"])
-        single_tex = []
-        for link_name, link_content in self.links.items():
-            links_single_tex_template = Template(template["links"]["single"])
-            single_tex.append(
-                links_single_tex_template.substitute(
-                    link_title=link_content["name"],
-                    link_url=link_content["url"],
-                    link_url_text=link_content["url_text"],
-                )
-            )
-        links_tex = links_complete_tex_template.substitute(
-            all_links="\n".join(single_tex)
-        )
-        return links_tex
+        self.template.get_tex("links", self.values["education"])
 
     def __str__(self):
         return f"{self.title}"

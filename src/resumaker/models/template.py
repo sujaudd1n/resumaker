@@ -92,4 +92,28 @@ class EducationTemplate(ResumeSectionTemplate):
 
 
 class LinksTemplate(ResumeSectionTemplate):
-    pass
+    def render_tex(self):
+        py_complete_template = Template(self.template["complete"])
+        py_single_template = Template(self.template["single"])
+        py_single_link_template = Template(self.template["single-link"])
+
+        rendered_links = []
+        for link_category, link_lists in self.values.items():
+            single_rendered_link = []
+            for link in link_lists:
+                single_rendered_link.append(
+                    py_single_link_template.substitute(
+                        link_url=link["url"],
+                        link_url_text=link["url_text"],
+                    )
+                )
+            rendered_links.append(
+                py_single_template.substitute(
+                    link_title=' '.join(list(map(lambda x: x[0].upper() + x[1:], link_category.split('-')))),
+                    single_links=" ".join(single_rendered_link),
+                )
+            )
+        all_links = py_complete_template.substitute(
+            all_links="\n".join(rendered_links)
+        )
+        return all_links

@@ -119,6 +119,6 @@ class TestLinksTemplate:
     def test_render_tex(self, linksObj):
         tex = linksObj.render_tex()
         assert tex == (
-            "Algorithms & http://example.com/l1 l1text http://example.com/l3 l3text\n"
-            "Open Source & http://example.com/l2 l2text"
+            "Algorithms http://example.com/l1 l1text http://example.com/l3 l3text\n"
+            "Open Source http://example.com/l2 l2text"
         )

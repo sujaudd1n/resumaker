@@ -11,6 +11,6 @@ fmt:
 lint:
 	python -m flake8 src/
 test:
-	PYTHONPATH="$(shell pwd)/src:$$PYTHONPATH" pytest
+	PYTHONPATH="$(shell pwd)/src:$$PYTHONPATH" pytest $(PTARGS)
 test-cov:
 	PYTHONPATH="$(shell pwd)/src:$$PYTHONPATH" pytest --cov=resumaker
