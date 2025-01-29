@@ -85,34 +85,40 @@ class TestEducationTemplate:
 
 class TestLinksTemplate:
     @pytest.fixture
-    def summaryObj(self):
-        values = [
-            {
-                "name": "CLGY",
-                "location": "LOCX",
-                "degree": "DEGZ",
-                "duration": "DUR3",
-                "acheivements": ["A1", "A2", "A3"],
-            },
-            {
-                "name": "CLGY2",
-                "location": "LOCX2",
-                "degree": "DEGZ2",
-                "duration": "DUR32",
-                "acheivements": ["A12", "A22", "A32"],
-            },
-        ]
+    def linksObj(self):
+        values = {
+            "algorithms": [
+                {
+                    "name": "l1",
+                    "url": "http://example.com/l1",
+                    "url_text": "l1text",
+                },
+                {
+                    "name": "l3",
+                    "url": "http://example.com/l3",
+                    "url_text": "l3text",
+                },
+            ],
+            "open-source": [
+                {
+                    "name": "l2",
+                    "url": "http://example.com/l2",
+                    "url_text": "l2text",
+                }
+            ],
+        }
         template = {
-            "complete": "S $all_educations E",
-            "single": "$degree $duration $name $location $all_acheivements",
-            "acheivement": "$acheivement",
+            "complete": "$all_links",
+            "single": "$link_title $single_links",
+            "single-link": "$link_url $link_url_text",
         }
 
-        educationTemplate = EducationTemplate(values, template)
-        return educationTemplate
+        linksTemplate = LinksTemplate(values, template)
+        return linksTemplate
 
-    def test_render_tex(self, summaryObj):
-        tex = summaryObj.render_tex()
+    def test_render_tex(self, linksObj):
+        tex = linksObj.render_tex()
         assert tex == (
-            "S DEGZ DUR3 CLGY LOCX A1 A2 A3\nDEGZ2 DUR32 CLGY2 LOCX2 A12 A22 A32 E"
+            "Algorithms & http://example.com/l1 l1text http://example.com/l3 l3text\n"
+            "Open Source & http://example.com/l2 l2text"
         )

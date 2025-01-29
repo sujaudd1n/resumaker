@@ -57,17 +57,25 @@ education:
     $location \\
     $all_acheivements
   acheivement: $acheivement \\
+
 links:
   complete:
-    \begin{rSection}{Links} \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l
-    @{}} $all_links \end{tabular} \end{rSection}
-  single: $link_title & \href{$link_url}{$link_url_text} \\
+    \begin{rSection}{Links}
+      \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l @{}}
+        $all_links
+      \end{tabular}
+    \end{rSection}
+  single: $link_title & $single_links \\
+  single-link: $\href{$link_url}{$link_url_text}
+
 summary: \begin{rSection}{$title} $text \end{rSection}
+
 skills:
   complete:
     \begin{rSection}{Skills} \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l
     @{}} $all_skills \end{tabular} \end{rSection}
   single: $skill_topic & $skills_list \\
+
 work_experience:
   complete:
     \begin{rSection}{Work Experience} \def \\ {\addressSep\ }
@@ -76,6 +84,7 @@ work_experience:
     \begin{rSubsection}{$company_name, $company_location \\ $position \\
     $duration}{}{}{} $all_contributions \end{rSubsection}
   single-contribution: \item $contribution
+
 projects:
   complete: \begin{rSection}{Projects} $all_projects \end{rSection}
   single:
