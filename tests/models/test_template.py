@@ -50,7 +50,7 @@ class TestSummaryTemplate:
 
 class TestEducationTemplate:
     @pytest.fixture
-    def summaryObj(self):
+    def educationObj(self):
         values = [
             {
                 "name": "CLGY",
@@ -76,8 +76,8 @@ class TestEducationTemplate:
         educationTemplate = EducationTemplate(values, template)
         return educationTemplate
 
-    def test_render_tex(self, summaryObj):
-        tex = summaryObj.render_tex()
+    def test_render_tex(self, educationObj):
+        tex = educationObj.render_tex()
         assert tex == (
             "S DEGZ DUR3 CLGY LOCX A1 A2 A3\nDEGZ2 DUR32 CLGY2 LOCX2 A12 A22 A32 E"
         )
@@ -139,3 +139,36 @@ class TestSkillsTemplate:
     def test_render_tex(self, skillsObj):
         tex = skillsObj.render_tex()
         assert tex == ("St1 s1, s2\nSt2 s3")
+
+
+class TestWorkExperienceTemplate:
+    @pytest.fixture
+    def work_experience_obj(self):
+        values = [
+            {
+                "company-name": "C1",
+                "location": "L1",
+                "role": "R1",
+                "duration": "D1",
+                "contributions": ["C1", "C2", "C3"],
+            },
+            {
+                "company-name": "C2",
+                "location": "L2",
+                "role": "R2",
+                "duration": "D2",
+                "contributions": ["C4", "C5", "C6"],
+            },
+        ]
+        template = {
+            "complete": "$all_work_experiences",
+            "single": "$company_name $location $role $duration $all_contributions",
+            "single-contribution": "$contribution",
+        }
+
+        work_experience_template = WorkExperienceTemplate(values, template)
+        return work_experience_template
+
+    def test_render_tex(self, work_experience_obj):
+        tex = work_experience_obj.render_tex()
+        assert tex == ("C1 L1 R1 D1 C1\nC2\nC3\nC2 L2 R2 D2 C4\nC5\nC6")

@@ -139,3 +139,8 @@ class SkillsTemplate(ResumeSectionTemplate):
             all_skills="\n".join(rendered_skill_topics)
         )
         return all_skills
+
+
+class WorkExperienceTemplate(ResumeSectionTemplate):
+    def render_tex(self):
+        return ""

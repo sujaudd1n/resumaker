@@ -113,16 +113,12 @@ class Links:
 
 
 class Skills:
-    def __init__(self, skills):
-        self.skills = skills
-
-
-
-    def __str__(self):
-        return f"{self.title}"
+    pass
 
 
 class WorkExperience:
+    pass
+
     def __init__(self, work_experience):
         self.work_experience = work_experience
 
@@ -164,8 +160,7 @@ class WorkExperience:
 
 
 class Project:
-    def __init__(self, projects):
-        self.projects = projects
+    pass
 
     def generate_tex(self):
         project_complete_tex_template = Template(template["projects"]["complete"])

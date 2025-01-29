@@ -82,10 +82,12 @@ skills:
 work_experience:
   complete:
     \begin{rSection}{Work Experience} \def \\ {\addressSep\ }
-    $all_work_experiences \end{rSection}
+      $all_work_experiences
+    \end{rSection}
   single:
-    \begin{rSubsection}{$company_name, $company_location \\ $position \\
-    $duration}{}{}{} $all_contributions \end{rSubsection}
+    \begin{rSubsection}{$company_name, $location \\ $role \\ $duration}{}{}{}
+      $all_contributions
+    \end{rSubsection}
   single-contribution: \item $contribution
 
 projects:
