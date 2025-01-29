@@ -125,4 +125,17 @@ class LinksTemplate(ResumeSectionTemplate):
 
 class SkillsTemplate(ResumeSectionTemplate):
     def render_tex(self):
-        return ""
+        complete_template = Template(self.template["complete"])
+        single_template = Template(self.template["single"])
+        rendered_skill_topics = []
+        for skill_topic, skills_list in self.values.items():
+            rendered_skill_topics.append(
+                single_template.substitute(
+                    skill_topic=skill_topic[0].upper() + skill_topic[1:],
+                    skills_list=", ".join(skills_list),
+                )
+            )
+        all_skills = complete_template.substitute(
+            all_skills="\n".join(rendered_skill_topics)
+        )
+        return all_skills

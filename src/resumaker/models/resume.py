@@ -116,21 +116,7 @@ class Skills:
     def __init__(self, skills):
         self.skills = skills
 
-    def generate_tex(self):
-        skills_complete_tex_template = Template(template["skills"]["complete"])
-        single_tex = []
-        for skill_topic, skills_list in self.skills.items():
-            skill_single_tex_template = Template(template["skills"]["single"])
-            single_tex.append(
-                skill_single_tex_template.substitute(
-                    skill_topic=skill_topic[0].upper() + skill_topic[1:],
-                    skills_list=", ".join(skills_list),
-                )
-            )
-        skills_tex = skills_complete_tex_template.substitute(
-            all_skills="\n".join(single_tex)
-        )
-        return skills_tex
+
 
     def __str__(self):
         return f"{self.title}"

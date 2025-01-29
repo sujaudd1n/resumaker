@@ -138,4 +138,4 @@ class TestSkillsTemplate:
 
     def test_render_tex(self, skillsObj):
         tex = skillsObj.render_tex()
-        assert tex == ("st1 s1 s2\nst2 s3")
+        assert tex == ("St1 s1, s2\nSt2 s3")
