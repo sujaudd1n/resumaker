@@ -179,4 +179,30 @@ class WorkExperienceTemplate(ResumeSectionTemplate):
 
 class ProjectTemplate(ResumeSectionTemplate):
     def render_tex(self):
-        return ""
+        complete_template = Template(self.template["complete"])
+        single_template = Template(self.template["single"])
+        detail_template = Template(self.template["single-detail"])
+
+        rendered_single = []
+        for project in self.values:
+            project_name = project["name"]
+            techstack = ", ".join(project["techstack"])
+
+            rendered_details = []
+            for detail in project["details"]:
+                rendered_details.append(detail_template.substitute(detail=detail))
+
+            rendered_single.append(
+                single_template.substitute(
+                    project_name=project_name,
+                    techstack=techstack,
+                    all_details="\n".join(rendered_details),
+                )
+            )
+
+        all_projects = complete_template.substitute(
+            all_projects="\n".join(rendered_single)
+        )
+
+        return all_projects
+

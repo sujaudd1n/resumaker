@@ -123,30 +123,3 @@ class WorkExperience:
 class Project:
     pass
 
-    def generate_tex(self):
-        project_complete_tex_template = Template(template["projects"]["complete"])
-        project_single_tex_template = Template(template["projects"]["single"])
-        detail_tex_template = Template(template["projects"]["single-detail"])
-
-        single_tex = []
-        for project in self.projects:
-            project_name = project["name"]
-            technologies = ", ".join(project["techstack"])
-
-            detail_tex = []
-            for detail in project["details"]:
-                detail_tex.append(detail_tex_template.substitute(detail=detail))
-
-            single_tex.append(
-                project_single_tex_template.substitute(
-                    project_name=project_name,
-                    technologies=technologies,
-                    all_details="\n".join(detail_tex),
-                )
-            )
-
-        project_tex = project_complete_tex_template.substitute(
-            all_projects="\n".join(single_tex)
-        )
-
-        return project_tex
