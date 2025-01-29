@@ -111,9 +111,6 @@ class Links:
     def generate_tex(self):
         self.template.get_tex("links", self.values["education"])
 
-    def __str__(self):
-        return f"{self.title}"
-
 
 class Skills:
     def __init__(self, skills):

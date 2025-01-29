@@ -109,11 +109,20 @@ class LinksTemplate(ResumeSectionTemplate):
                 )
             rendered_links.append(
                 py_single_template.substitute(
-                    link_title=' '.join(list(map(lambda x: x[0].upper() + x[1:], link_category.split('-')))),
+                    link_title=" ".join(
+                        list(
+                            map(
+                                lambda x: x[0].upper() + x[1:], link_category.split("-")
+                            )
+                        )
+                    ),
                     single_links=" ".join(single_rendered_link),
                 )
             )
-        all_links = py_complete_template.substitute(
-            all_links="\n".join(rendered_links)
-        )
+        all_links = py_complete_template.substitute(all_links="\n".join(rendered_links))
         return all_links
+
+
+class SkillsTemplate(ResumeSectionTemplate):
+    def render_tex(self):
+        return ""

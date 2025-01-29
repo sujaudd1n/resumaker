@@ -122,3 +122,20 @@ class TestLinksTemplate:
             "Algorithms http://example.com/l1 l1text http://example.com/l3 l3text\n"
             "Open Source http://example.com/l2 l2text"
         )
+
+
+class TestSkillsTemplate:
+    @pytest.fixture
+    def skillsObj(self):
+        values = {"st1": ["s1", "s2"], "st2": ["s3"]}
+        template = {
+            "complete": "$all_skills",
+            "single": "$skill_topic $skills_list",
+        }
+
+        skillsTemplate = SkillsTemplate(values, template)
+        return skillsTemplate
+
+    def test_render_tex(self, skillsObj):
+        tex = skillsObj.render_tex()
+        assert tex == ("st1 s1 s2\nst2 s3")
