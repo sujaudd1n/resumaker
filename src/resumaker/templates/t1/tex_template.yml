@@ -66,7 +66,7 @@ links:
       \end{tabular}
     \end{rSection}
   single: $link_title & $single_links \\
-  single-link: $\href{$link_url}{$link_url_text}
+  single-link: \href{$link_url}{$link_url_text}
 
 summary: \begin{rSection}{$title} $text \end{rSection}
 
@@ -96,7 +96,7 @@ projects:
       $all_projects
     \end{rSection}
   single:
-    \begin{rSubsection}{$project_name}{$technologies}{}{}
+    \begin{rSubsection}{$project_name}{$techstack}{}{}
       $all_details
     \end{rSubsection}
   single-detail: \item $detail

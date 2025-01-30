@@ -11,7 +11,14 @@ class ResumeTemplate:
     def __init__(self, name):
         self.name = name
         self.tex_template_obj = self.get_template_obj()
+
         self.contact = ContactTemplate
+        self.summary = SummaryTemplate
+        self.education = EducationTemplate
+        self.skills = SkillsTemplate
+        self.work_experience = WorkExperienceTemplate
+        self.projects = ProjectTemplate
+        self.links = LinksTemplate
 
     def get_template_obj(self):
         with open(
@@ -23,7 +30,6 @@ class ResumeTemplate:
             return tex_obj
 
     def get_tex(self, section, values):
-        print(values)
         return getattr(self, section)(
             self.tex_template_obj[section], values
         ).render_tex()
@@ -33,9 +39,6 @@ class ResumeTemplate:
 
     def get_license(self):
         return self.tex_template_obj["license"]
-
-    def render_tex(self):
-        pass
 
 
 class ResumeSectionTemplate:
@@ -112,7 +115,7 @@ class LinksTemplate(ResumeSectionTemplate):
                 single_rendered_link.append(
                     py_single_link_template.substitute(
                         link_url=link["url"],
-                        link_url_text=link["url_text"],
+                        link_url_text=link["url_text"]
                     )
                 )
             rendered_links.append(

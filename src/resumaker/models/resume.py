@@ -10,6 +10,7 @@ from resumaker.models.template import ContactTemplate
 config = get_config()
 BASE_DIR = config["BASE_DIR"]
 
+ORDER = ["summary", "education", "skills", "work_experience", "projects", "links"]
 
 class Resume:
     def __init__(
@@ -17,7 +18,7 @@ class Resume:
         values,
         template,
         /,
-        order,
+        order=ORDER,
     ):
         self.values = values
         self.template = template
@@ -42,27 +43,27 @@ class Resume:
         ]
 
         # self.internal_sections = [self.summary, self.education, self.skills, self.links]
-        self.internal_sections = []  # order
+        self.internal_sections = order if order else ORDER
 
     def generate_tex(self):
-        all_sections_tex_list = []
+        all_sections = []
         for section in self.setup_sections:
-            all_sections_tex_list.append(section)
+            all_sections.append(section)
 
-        internal_sections_tex_list = []
+        internal_sections = []
         for section in self.internal_sections:
-            tex = getattr(self, section).generate_tex()
-            internal_sections_tex_list.append(tex)
+            tex = getattr(self, section).generate_tex(self.template, self.values[section])
+            internal_sections.append(tex)
 
         internal_tex_template = Template(template["main"])
-        internal_tex_str = "\n".join(internal_sections_tex_list)
+        internal_tex_str = "\n".join(internal_sections)
         rendered_internal_tex = internal_tex_template.substitute(
             CONTENT=internal_tex_str
         )
 
-        all_sections_tex_list.append(rendered_internal_tex)
+        all_sections.append(rendered_internal_tex)
 
-        return "\n".join(all_sections_tex_list)
+        return "\n".join(all_sections)
 
     def write_tex(self, filepath):
         with open(filepath, "w") as f:
@@ -116,14 +117,14 @@ class Links:
 
 class Skills:
     def generate_tex(self, template, values):
-        return template.get_tex("links", values)
+        return template.get_tex("skills", values)
 
 
 class WorkExperience:
     def generate_tex(self, template, values):
-        return template.get_tex("links", values)
+        return template.get_tex("work_experience", values)
 
 
 class Project:
     def generate_tex(self, template, values):
-        return template.get_tex("links", values)
+        return template.get_tex("projects", values)

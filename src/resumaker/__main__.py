@@ -50,7 +50,7 @@ def main():
         resume = Resume(
             target,
             template,
-            order=config["ORDER"],
+            order=config.get("ORDER"),
         )
         resume.build(build_name(target))
         # print(json.dumps(complete_resume_obj, indent=2))
