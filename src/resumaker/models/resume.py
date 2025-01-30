@@ -42,7 +42,7 @@ class Resume:
         ]
 
         # self.internal_sections = [self.summary, self.education, self.skills, self.links]
-        self.internal_sections = [] #order
+        self.internal_sections = []  # order
 
     def generate_tex(self):
         all_sections_tex_list = []
@@ -64,24 +64,30 @@ class Resume:
 
         return "\n".join(all_sections_tex_list)
 
-    def write_tex(self, filename):
-        filepath = BASE_DIR.joinpath(f"templates/{filename}.tex")
+    def write_tex(self, filepath):
         with open(filepath, "w") as f:
             text = self.generate_tex()
             f.write(text)
 
     def build(self, filename):
-        self.write_tex(filename)
-        filepath = BASE_DIR.joinpath(f"templates/{filename}.tex")
+        tex_filename = f"{filename}.tex"
+        filepath = BASE_DIR.joinpath(f"templates/{tex_filename}")
+        self.write_tex(filepath)
+
         old_cwd = os.getcwd()
-        newdir = os.path.dirname(filepath)
-        os.chdir(newdir)
-        cmpr = subprocess.run(["pdflatex", "-interaction=batchmode", filepath])
-        # if cmpr.returncode != 0:
-        # raise Exception
-        shutil.move(filename + ".pdf", os.path.join(old_cwd, filename + ".pdf"))
+        new_cwd = os.path.dirname(filepath)
+        os.chdir(new_cwd)
+
+        return_code = subprocess.run(
+            ["pdflatex", "-interaction=batchmode", tex_filename]
+        )
+
+        pdf_filename = f"{filename}.pdf"
+        shutil.move(pdf_filename, os.path.join(old_cwd, pdf_filename))
+
         for ext in ["log", "out", "tex", "aux"]:
-            os.remove(filename + "." + ext)
+            os.remove(f"{filename}.{ext}")
+
         os.chdir(old_cwd)
 
     def __str__(self):
