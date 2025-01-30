@@ -23,7 +23,7 @@ class TestContactTemplate:
         }
         template = "$name$location$phone$email$linkedin$github"
 
-        contactTemplate = ContactTemplate(values, template)
+        contactTemplate = ContactTemplate(template, values)
         return contactTemplate
 
     def test_render_tex(self, contactObj):
@@ -40,7 +40,7 @@ class TestSummaryTemplate:
         }
         template = "$title $text"
 
-        summaryTemplate = SummaryTemplate(values, template)
+        summaryTemplate = SummaryTemplate(template, values)
         return summaryTemplate
 
     def test_render_tex(self, summaryObj):
@@ -73,7 +73,7 @@ class TestEducationTemplate:
             "acheivement": "$acheivement",
         }
 
-        educationTemplate = EducationTemplate(values, template)
+        educationTemplate = EducationTemplate(template, values)
         return educationTemplate
 
     def test_render_tex(self, educationObj):
@@ -113,7 +113,7 @@ class TestLinksTemplate:
             "single-link": "$link_url $link_url_text",
         }
 
-        linksTemplate = LinksTemplate(values, template)
+        linksTemplate = LinksTemplate(template, values)
         return linksTemplate
 
     def test_render_tex(self, linksObj):
@@ -133,7 +133,7 @@ class TestSkillsTemplate:
             "single": "$skill_topic $skills_list",
         }
 
-        skillsTemplate = SkillsTemplate(values, template)
+        skillsTemplate = SkillsTemplate(template, values)
         return skillsTemplate
 
     def test_render_tex(self, skillsObj):
@@ -166,7 +166,7 @@ class TestWorkExperienceTemplate:
             "single-contribution": "$contribution",
         }
 
-        work_experience_template = WorkExperienceTemplate(values, template)
+        work_experience_template = WorkExperienceTemplate(template, values)
         return work_experience_template
 
     def test_render_tex(self, work_experience_obj):
@@ -195,7 +195,7 @@ class TestProjectTemplate:
             "single-detail": "$detail",
         }
 
-        project_template = ProjectTemplate(values, template)
+        project_template = ProjectTemplate(template, values)
         return project_template
 
     def test_render_tex(self, project_obj):

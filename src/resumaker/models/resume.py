@@ -18,35 +18,31 @@ class Resume:
         template,
         /,
         order,
-        # name,
-        # location,
-        # contact,
-        # summary,
-        # education,
-        # links,
-        # skills,
-        # work_experience,
-        # projects,
     ):
         self.values = values
         self.template = template
 
-        self.contact = Contact(name, location, contact)
-        # self.summary = Summary(summary)
-        # self.education = Education(education)
-        # self.skills = Skills(skills)
-        # self.work_experience = WorkExperience(work_experience)
-        # self.projects = Project(projects)
-        # self.links = Links(links)
+        self.contact = Contact()
+        self.summary = Summary()
+        self.education = Education()
+        self.skills = Skills()
+        self.work_experience = WorkExperience()
+        self.projects = Project()
+        self.links = Links()
 
         self.setup_sections = [
             self.template.get_license(),
             self.template.get_preamble(),
-            self.template.get_contact(),
+            self.contact.generate_tex(
+                self.template,
+                self.values["contact"]
+                | {"name": self.values["name"]}
+                | {"location": self.values["location"]},
+            ),
         ]
 
         # self.internal_sections = [self.summary, self.education, self.skills, self.links]
-        self.internal_sections = order
+        self.internal_sections = [] #order
 
     def generate_tex(self):
         all_sections_tex_list = []
@@ -93,33 +89,35 @@ class Resume:
 
 
 class Contact:
-    def generate_tex(self):
-        self.template.get_tex("contact", self.values["contact"])
+    def generate_tex(self, template, values):
+        return template.get_tex("contact", values)
 
 
 class Summary:
-    def generate_tex(self):
-        self.template.get_tex("summary", self.values["summary"])
+    def generate_tex(self, template, values):
+        return template.get_tex("summary", values)
 
 
 class Education:
-    def generate_tex(self):
-        self.template.get_tex("education", self.values["education"])
+    def generate_tex(self, template, values):
+        return template.get_tex("education", values)
 
 
 class Links:
-    def generate_tex(self):
-        self.template.get_tex("links", self.values["education"])
+    def generate_tex(self, template, values):
+        return template.get_tex("links", values)
 
 
 class Skills:
-    pass
+    def generate_tex(self, template, values):
+        return template.get_tex("links", values)
 
 
 class WorkExperience:
-    pass
+    def generate_tex(self, template, values):
+        return template.get_tex("links", values)
 
 
 class Project:
-    pass
-
+    def generate_tex(self, template, values):
+        return template.get_tex("links", values)

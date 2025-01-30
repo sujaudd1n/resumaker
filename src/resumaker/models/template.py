@@ -11,7 +11,7 @@ class ResumeTemplate:
     def __init__(self, name):
         self.name = name
         self.tex_template_obj = self.get_template_obj()
-        # self.contact = ContactTemplate()
+        self.contact = ContactTemplate
 
     def get_template_obj(self):
         with open(
@@ -22,23 +22,31 @@ class ResumeTemplate:
             tex_obj = render_yaml_txt(tex)
             return tex_obj
 
-    def get_tex(section, values):
-        return getattr(self, section).render_tex(
-            values, self.tex_template_obj["contact"]
-        )
+    def get_tex(self, section, values):
+        print(values)
+        return getattr(self, section)(
+            self.tex_template_obj[section], values
+        ).render_tex()
+
+    def get_preamble(self):
+        return self.tex_template_obj["preamble"]
+
+    def get_license(self):
+        return self.tex_template_obj["license"]
 
     def render_tex(self):
         pass
 
 
 class ResumeSectionTemplate:
-    def __init__(self, values, template):
+    def __init__(self, template, values):
         self.values = values
         self.template = template
 
 
 class ContactTemplate(ResumeSectionTemplate):
     def render_tex(self):
+        print(self.values)
         pyTemplate = Template(self.template)
         result = pyTemplate.substitute(
             name=self.values["name"],
@@ -205,4 +213,3 @@ class ProjectTemplate(ResumeSectionTemplate):
         )
 
         return all_projects
-

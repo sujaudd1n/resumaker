@@ -5,29 +5,23 @@ from resumaker.config import get_config
 from resumaker.utils import is_resume_valid, common_fields
 from resumaker.render_resume import *
 from resumaker.models.resume import Resume
+from resumaker.models.template import ResumeTemplate
 from resumaker.__about__ import __version__
 
 # from resumaker.template import ResumeTemplate
 
+config = get_config()
+
 
 def main():
     parser = get_parser()
-    config = get_config()
 
     args = parser.parse_args()
 
-    if args.filenames:
-        filenames = args.filenames
-        if type(filenames) != list:
-            filenames = [filenames]
-        resume_filenames = filenames
-    else:
-        resume_filenames = config["RESUME_FILENAME"]
+    resume_filenames = get_resume_filenames(args.filenames)
 
-    resume_target = args.target if args.target else None
-
+    # check if files exist
     result, errors = get_resume_obj(resume_filenames)
-
     if result:
         complete_resume_obj = result
     else:
@@ -35,11 +29,12 @@ def main():
             print(error)
         sys.exit(f"Could not render {resume_filenames} into valid resume object!")
 
+    # check validity (schema) of resume
     is_valid, msg = is_resume_valid(complete_resume_obj)
     if not is_valid:
         sys.exit(msg)
 
-    common = {
+    common_sections = {
         "name": complete_resume_obj.get("name"),
         "location": complete_resume_obj.get("location"),
         "contact": complete_resume_obj.get("contact"),
@@ -47,49 +42,61 @@ def main():
         "links": complete_resume_obj.get("links"),
     }
 
-    given_targets = [
-        key for key in complete_resume_obj.keys() if key not in common_fields
-    ]
+    all_targets = get_targets(args.target, complete_resume_obj, common_sections)
 
-    print(given_targets)
+    template = ResumeTemplate("t1")
 
-    if resume_target:
-        if resume_target in given_targets:
-            target_details = [
-                complete_resume_obj[resume_target]
-                | {"target_name": resume_target}
-                | common
-            ]
-        else:
-            sys.exit("Target is not in the resume")
-    else:
-        target_details = []
-        for target in given_targets:
-            target_details.append(
-                complete_resume_obj[target] | {"target_name": target} | common
-            )
-
-    def build_name(target):
-        print(target["target_name"])
-        user_name = target["name"].replace(" ", "").lower()
-        target_name = target["target_name"]
-        return f"{user_name}-{target_name}"
-
-    for target in target_details:
+    for target in all_targets:
         resume = Resume(
-            target["name"],
-            target["location"],
-            target["contact"],
-            target["summary"],
-            target["education"],
-            target["links"],
-            target["skills"],
-            target["work-experience"],
-            target["projects"],
+            target,
+            template,
             order=config["ORDER"],
         )
         resume.build(build_name(target))
         # print(json.dumps(complete_resume_obj, indent=2))
+
+
+def build_name(target):
+    print(target["target_name"])
+    user_name = target["name"].replace(" ", "").lower()
+    target_name = target["target_name"]
+    return f"{user_name}-{target_name}"
+
+
+def get_resume_filenames(filenames_arg):
+    resume_filenames = config["RESUME_FILENAME"]
+
+    if filenames_arg:
+        resume_filenames = filenames_arg
+        if type(resume_filenames) != list:
+            resume_filenames = [filenames_arg]
+
+    return resume_filenames
+
+
+def get_targets(target_args, complete_resume_obj, common_sections):
+    user_specified_target = target_args if target_args else None
+    user_given_targets = [
+        key for key in complete_resume_obj.keys() if key not in common_fields
+    ]
+
+    all_targets = []
+    if user_specified_target:
+        if user_specified_target in user_given_targets:
+            all_targets.append(
+                complete_resume_obj[user_specified_target]
+                | {"target_name": user_specified_target}
+                | common_sections
+            )
+        else:
+            sys.exit("Target is not in the resume")
+    else:
+        for target in user_given_targets:
+            all_targets.append(
+                complete_resume_obj[target] | {"target_name": target} | common_sections
+            )
+
+    return all_targets
 
 
 def get_parser():
