@@ -55,8 +55,8 @@ education:
     \textbf{$degree} \hfill \textit{$duration} \\
     $name,
     $location \\
-    $all_acheivements
-  acheivement: $acheivement \\
+    $all_achievements
+  achievement: $achievement \\
 
 links:
   complete:

@@ -57,20 +57,20 @@ class TestEducationTemplate:
                 "location": "LOCX",
                 "degree": "DEGZ",
                 "duration": "DUR3",
-                "acheivements": ["A1", "A2", "A3"],
+                "achievements": ["A1", "A2", "A3"],
             },
             {
                 "name": "CLGY2",
                 "location": "LOCX2",
                 "degree": "DEGZ2",
                 "duration": "DUR32",
-                "acheivements": ["A12", "A22", "A32"],
+                "achievements": ["A12", "A22", "A32"],
             },
         ]
         template = {
             "complete": "S $all_educations E",
-            "single": "$degree $duration $name $location $all_acheivements",
-            "acheivement": "$acheivement",
+            "single": "$degree $duration $name $location $all_achievements",
+            "achievement": "$achievement",
         }
 
         educationTemplate = EducationTemplate(template, values)

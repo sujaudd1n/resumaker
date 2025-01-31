@@ -53,9 +53,9 @@ $CONTENT
 
         \textbf{$degree} \hfill \textit{$duration} \\ 
         $institution_name, $institution_location \\
-        $all_acheivements
+        $all_achievements
         """,
-        "acheivement": r"$single_acheivement \\",
+        "achievement": r"$single_achievement \\",
     },
     "links": {
         "complete": r"""

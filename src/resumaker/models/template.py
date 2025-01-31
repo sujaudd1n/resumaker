@@ -79,22 +79,22 @@ class EducationTemplate(ResumeSectionTemplate):
     def render_tex(self):
         py_complete_template = Template(self.template["complete"])
         py_single_template = Template(self.template["single"])
-        py_acheivement_template = Template(self.template["acheivement"])
+        py_achievement_template = Template(self.template["achievement"])
 
         rendered_single_educations = []
         for institute in self.values:
-            rendered_acheivements = []
-            for acheivement in institute["acheivements"]:
-                rendered_acheivement = py_acheivement_template.substitute(
-                    acheivement=acheivement
+            rendered_achievements = []
+            for achievement in institute["achievements"]:
+                rendered_achievement = py_achievement_template.substitute(
+                    achievement=achievement
                 )
-                rendered_acheivements.append(rendered_acheivement)
+                rendered_achievements.append(rendered_achievement)
             rendered_single_education = py_single_template.substitute(
                 name=institute["name"],
                 duration=institute["duration"],
                 degree=institute["degree"],
                 location=institute["location"],
-                all_acheivements=" ".join(rendered_acheivements),
+                all_achievements=" ".join(rendered_achievements),
             )
             rendered_single_educations.append(rendered_single_education)
 
