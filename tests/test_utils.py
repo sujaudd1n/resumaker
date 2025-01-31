@@ -41,11 +41,23 @@ class TestReadFileTxt:
 class TestIsConfigValid:
     def test_when_dict(self, mocker):
         config = is_config_valid({})
-        assert config == True
+        assert config == (True, None)
 
     def test_when_list(self, mocker, capsys):
         config = is_config_valid([])
-        assert config == False
+        assert config == (False, "config.yml should be convertible to Python dict.")
+
+    def test_when_value_is_dict(self, mocker, capsys):
+        config = is_config_valid({
+            "KEY": {}
+        })
+        assert config == (False, "Value of config has to be str or list of str.")
+
+    def test_when_value_is_list(self, mocker, capsys):
+        config = is_config_valid({
+            "KEY": []
+        })
+        assert config == (True, None)
 
 
 class TestIsResumeValid:

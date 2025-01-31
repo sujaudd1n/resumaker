@@ -72,7 +72,7 @@ class Resume:
 
     def build(self, filename):
         tex_filename = f"{filename}.tex"
-        filepath = BASE_DIR.joinpath(f"templates/{tex_filename}")
+        filepath = BASE_DIR.joinpath(f"templates/{self.template.get_template_name()}/{tex_filename}")
         self.write_tex(filepath)
 
         old_cwd = os.getcwd()
@@ -80,7 +80,8 @@ class Resume:
         os.chdir(new_cwd)
 
         return_code = subprocess.run(
-            ["pdflatex", "-interaction=batchmode", tex_filename]
+            # ["pdflatex", "-interaction=batchmode", tex_filename]
+            ["pdflatex", tex_filename]
         )
 
         pdf_filename = f"{filename}.pdf"

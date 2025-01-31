@@ -19,6 +19,9 @@ class ResumeTemplate:
         self.work_experience = WorkExperienceTemplate
         self.projects = ProjectTemplate
         self.links = LinksTemplate
+    
+    def get_template_name(self):
+        return self.name
 
     def get_template_obj(self):
         with open(
