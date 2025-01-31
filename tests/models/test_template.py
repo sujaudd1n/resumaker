@@ -200,4 +200,5 @@ class TestProjectTemplate:
 
     def test_render_tex(self, project_obj):
         tex = project_obj.render_tex()
-        assert tex == ("P1 T1, T2, T3 D1\nD2\nD3\nP2 T1, T2, T3 D1\nD2\nD3")
+        assert tex == ("P1 T1, T2, T3 \nD1\nD2\nD3\n"
+                       "P2 T1, T2, T3 \nD1\nD2\nD3")

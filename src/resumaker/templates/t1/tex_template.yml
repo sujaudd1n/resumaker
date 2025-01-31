@@ -31,11 +31,11 @@ preamble: |
 
   \input{glyphtounicode}
   \pdfgentounicode=1
-main: 
+main: |
   \begin{document}
     $CONTENT
   \end{document}
-contact:
+contact: |
   \name{$name}
 
   \address{$location}
@@ -47,11 +47,11 @@ contact:
   \raisebox{-2px}{\includegraphics[width=10px]{icons/github.png}}
   \href{https://github.com/$github}{github.com/$github}}
 education:
-  complete:
+  complete: |
     \begin{rSection}{Education}
         $all_educations
     \end{rSection}
-  single:
+  single: |
     \textbf{$degree} \hfill \textit{$duration} \\
     $name,
     $location \\
@@ -59,7 +59,7 @@ education:
   achievement: $achievement \\
 
 links:
-  complete:
+  complete: |
     \begin{rSection}{Links}
       \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l @{}}
         $all_links
@@ -71,7 +71,7 @@ links:
 summary: \begin{rSection}{$title} $text \end{rSection}
 
 skills:
-  complete:
+  complete: |
     \begin{rSection}{Skills}
       \begin{tabular}{@{} >{\bfseries}l @{\hspace{6ex}} l @{}}
         $all_skills
@@ -80,22 +80,22 @@ skills:
   single: $skill_topic & $skills_list \\
 
 work_experience:
-  complete:
+  complete: |
     \begin{rSection}{Work Experience} \def \\ {\addressSep\ }
       $all_work_experiences
     \end{rSection}
-  single:
+  single: |
     \begin{rSubsection}{$company_name, $location \\ $role \\ $duration}{}{}{}
       $all_contributions
     \end{rSubsection}
   single-contribution: \item $contribution
 
 projects:
-  complete:
+  complete: |
     \begin{rSection}{Projects}
       $all_projects
     \end{rSection}
-  single:
+  single: |
     \begin{rSubsection}{$project_name}{$techstack}{}{}
       $all_details
     \end{rSubsection}

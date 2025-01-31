@@ -210,7 +210,7 @@ class ProjectTemplate(ResumeSectionTemplate):
                 single_template.substitute(
                     project_name=project_name,
                     techstack=techstack,
-                    all_details="\n".join(rendered_details),
+                    all_details= "\n" + "\n".join(rendered_details),
                 )
             )
 
