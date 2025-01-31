@@ -4,10 +4,9 @@ import shutil
 from pathlib import Path
 from string import Template
 from resumaker.template_str import template
-from resumaker.config import get_config
+from resumaker.config import config
 from resumaker.models.template import ContactTemplate
 
-config = get_config()
 BASE_DIR = config["BASE_DIR"]
 
 ORDER = ["summary", "education", "skills", "work_experience", "projects", "links"]
@@ -80,8 +79,8 @@ class Resume:
         os.chdir(new_cwd)
 
         return_code = subprocess.run(
-            # ["pdflatex", "-interaction=batchmode", tex_filename]
-            ["pdflatex", tex_filename]
+            ["pdflatex", "-interaction=batchmode", tex_filename]
+            # ["pdflatex", tex_filename]
         )
 
         pdf_filename = f"{filename}.pdf"

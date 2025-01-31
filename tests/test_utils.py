@@ -45,13 +45,13 @@ class TestIsConfigValid:
 
     def test_when_list(self, mocker, capsys):
         config = is_config_valid([])
-        assert config == (False, "config.yml should be convertible to Python dict.")
+        assert config == (False, "config.yml should be convertible to Python dict")
 
     def test_when_value_is_dict(self, mocker, capsys):
         config = is_config_valid({
             "KEY": {}
         })
-        assert config == (False, "Value of config has to be str or list of str.")
+        assert config == (False, "Value of config has to be str or list of str")
 
     def test_when_value_is_list(self, mocker, capsys):
         config = is_config_valid({

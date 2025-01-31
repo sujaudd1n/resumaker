@@ -1,16 +1,12 @@
 import argparse
 import json
 
-from resumaker.config import get_config
+from resumaker.config import config
 from resumaker.utils import is_resume_valid, common_fields
 from resumaker.render_resume import *
 from resumaker.models.resume import Resume
 from resumaker.models.template import ResumeTemplate
 from resumaker.__about__ import __version__
-
-# from resumaker.template import ResumeTemplate
-
-config = get_config()
 
 
 def main():

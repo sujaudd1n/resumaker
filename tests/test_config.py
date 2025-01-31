@@ -50,19 +50,19 @@ class TestManageUserConfigTxt:
         patch1 = mocker.patch("resumaker.config.render_yaml_txt")
         patch1.return_value = []
         patch2 = mocker.patch("resumaker.config.is_config_valid")
-        patch2.return_value = False
+        patch2.return_value = False, "error"
 
         out = manage_user_config_txt(None)
         captured = capsys.readouterr()
 
         assert out == default_configs
-        assert captured.out == "config.yml is not valid! Using default configs.\n"
+        assert captured.out == "Warning: error. Using default configs.\n"
 
     def test_when_config_obj_valid(self, mocker):
         patch1 = mocker.patch("resumaker.config.render_yaml_txt")
         patch1.return_value = True
         patch2 = mocker.patch("resumaker.config.is_config_valid")
-        patch2.return_value = True
+        patch2.return_value = True, None
 
         p3_return = {"KEY": "Merged with user config"}
         patch3 = mocker.patch("resumaker.config.merge_user_config_with_defaults")

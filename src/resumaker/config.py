@@ -38,10 +38,11 @@ def manage_user_config_txt(user_config_txt):
     and return else return default_configs
     """
     user_config_obj = render_yaml_txt(user_config_txt)
-    if is_config_valid(user_config_obj):
+    is_valid, err_msg = is_config_valid(user_config_obj)
+    if is_valid:
         return merge_user_config_with_defaults(user_config_obj)
     else:
-        print("config.yml is not valid! Using default configs.")
+        print(f"Warning: {err_msg}. Using default configs.")
         return default_configs
 
 
@@ -61,3 +62,5 @@ def merge_user_config_with_defaults(user_config_obj):
         else:
             print(f"{config} is not supported!")
     return default_configs
+
+config = get_config()

@@ -43,9 +43,9 @@ def is_config_valid(config_obj):
     Each value in key: value has to be a str or list
     """
     try:
-        assert isinstance(config_obj, dict), "config.yml should be convertible to Python dict."
+        assert isinstance(config_obj, dict), "config.yml should be convertible to Python dict"
         for _, val in config_obj.items():
-            assert isinstance(val, list) or isinstance(val, str), "Value of config has to be str or list of str."
+            assert isinstance(val, list) or isinstance(val, str), "Value of config has to be str or list of str"
     except AssertionError as exc:
         return False, str(exc)
     return True, None
