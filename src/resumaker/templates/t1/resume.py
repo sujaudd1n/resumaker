@@ -5,11 +5,11 @@ from pathlib import Path
 from string import Template
 from resumaker.template_str import template
 from resumaker.config import config
-from resumaker.models.template import ContactTemplate
 
 BASE_DIR = config["BASE_DIR"]
 
 ORDER = ["summary", "education", "skills", "work_experience", "projects", "links"]
+
 
 class Resume:
     def __init__(
@@ -51,7 +51,9 @@ class Resume:
 
         internal_sections = []
         for section in self.internal_sections:
-            tex = getattr(self, section).generate_tex(self.template, self.values[section])
+            tex = getattr(self, section).generate_tex(
+                self.template, self.values[section]
+            )
             internal_sections.append(tex)
 
         internal_tex_template = Template(template["main"])
@@ -71,7 +73,9 @@ class Resume:
 
     def build(self, filename):
         tex_filename = f"{filename}.tex"
-        filepath = BASE_DIR.joinpath(f"templates/{self.template.get_template_name()}/{tex_filename}")
+        filepath = BASE_DIR.joinpath(
+            f"templates/{self.template.get_template_name()}/{tex_filename}"
+        )
         self.write_tex(filepath)
 
         old_cwd = os.getcwd()

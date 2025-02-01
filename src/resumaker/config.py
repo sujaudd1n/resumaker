@@ -63,4 +63,5 @@ def merge_user_config_with_defaults(user_config_obj):
             print(f"{config} is not supported!")
     return default_configs
 
+
 config = get_config()

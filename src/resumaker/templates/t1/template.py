@@ -19,7 +19,7 @@ class ResumeTemplate:
         self.work_experience = WorkExperienceTemplate
         self.projects = ProjectTemplate
         self.links = LinksTemplate
-    
+
     def get_template_name(self):
         return self.name
 
@@ -117,8 +117,7 @@ class LinksTemplate(ResumeSectionTemplate):
             for link in link_lists:
                 single_rendered_link.append(
                     py_single_link_template.substitute(
-                        link_url=link["url"],
-                        link_url_text=link["url_text"]
+                        link_url=link["url"], link_url_text=link["url_text"]
                     )
                 )
             rendered_links.append(
@@ -146,13 +145,26 @@ class SkillsTemplate(ResumeSectionTemplate):
             rendered_skill_topics.append(
                 single_template.substitute(
                     skill_topic=skill_topic[0].upper() + skill_topic[1:],
-                    skills_list=", ".join(skills_list),
+                    skills_list=self.format_skills_list(skills_list),
                 )
             )
         all_skills = complete_template.substitute(
             all_skills="\n".join(rendered_skill_topics)
         )
         return all_skills
+
+    def format_skills_list(self, skills_list: list) -> str:
+        count = len(skills_list)
+        curr_line_width = -2
+        line_breaked_skills = []
+        for skill in skills_list:
+            if curr_line_width + len(skill) > 100:
+                line_breaked_skills.append("\\\\ &")
+                curr_line_width = -2
+            line_breaked_skills.append(skill)
+            curr_line_width += len(skill) + 2
+        print(line_breaked_skills)
+        return ", ".join(line_breaked_skills)
 
 
 class WorkExperienceTemplate(ResumeSectionTemplate):
@@ -210,7 +222,7 @@ class ProjectTemplate(ResumeSectionTemplate):
                 single_template.substitute(
                     project_name=project_name,
                     techstack=techstack,
-                    all_details= "\n" + "\n".join(rendered_details),
+                    all_details="\n" + "\n".join(rendered_details),
                 )
             )
 

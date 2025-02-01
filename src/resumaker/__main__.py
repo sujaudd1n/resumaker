@@ -4,8 +4,8 @@ import json
 from resumaker.config import config
 from resumaker.utils import is_resume_valid, common_fields
 from resumaker.render_resume import *
-from resumaker.models.resume import Resume
-from resumaker.models.template import ResumeTemplate
+from resumaker.templates.t1.resume import Resume
+from resumaker.templates.t1.template import ResumeTemplate
 from resumaker.__about__ import __version__
 
 

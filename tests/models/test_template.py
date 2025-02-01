@@ -1,5 +1,5 @@
 import pytest
-from resumaker.models.template import *
+from resumaker.templates.t1.template import *
 from .tex_template import tex_template
 
 
@@ -127,7 +127,10 @@ class TestLinksTemplate:
 class TestSkillsTemplate:
     @pytest.fixture
     def skillsObj(self):
-        values = {"st1": ["s1", "s2"], "st2": ["s3"]}
+        values = {
+            "st1": ["s1", "s2"],
+            "st2": ["s3"],
+        }
         template = {
             "complete": "$all_skills",
             "single": "$skill_topic $skills_list",
@@ -139,6 +142,22 @@ class TestSkillsTemplate:
     def test_render_tex(self, skillsObj):
         tex = skillsObj.render_tex()
         assert tex == ("St1 s1, s2\nSt2 s3")
+
+    def test_format_skills_list(self):
+        topic3 = [
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+            "WIDTH-1010",
+        ]  # 12 total
 
 
 class TestWorkExperienceTemplate:
@@ -200,5 +219,4 @@ class TestProjectTemplate:
 
     def test_render_tex(self, project_obj):
         tex = project_obj.render_tex()
-        assert tex == ("P1 T1, T2, T3 \nD1\nD2\nD3\n"
-                       "P2 T1, T2, T3 \nD1\nD2\nD3")
+        assert tex == ("P1 T1, T2, T3 \nD1\nD2\nD3\n" "P2 T1, T2, T3 \nD1\nD2\nD3")
