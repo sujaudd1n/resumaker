@@ -143,7 +143,7 @@ class TestSkillsTemplate:
         tex = skillsObj.render_tex()
         assert tex == ("St1 s1, s2\nSt2 s3")
 
-    def test_format_skills_list(self):
+    def test_format_skills_list(self, skillsObj):
         topic3 = [
             "WIDTH-1010",
             "WIDTH-1010",
@@ -158,6 +158,13 @@ class TestSkillsTemplate:
             "WIDTH-1010",
             "WIDTH-1010",
         ]  # 12 total
+        skills = skillsObj.format_skills_list(topic3)
+        assert skills == (
+            "WIDTH-1010, WIDTH-1010, WIDTH-1010, WIDTH-1010, "
+            "WIDTH-1010, WIDTH-1010, WIDTH-1010, WIDTH-1010"
+            " \\\\ &\n"
+            "WIDTH-1010, WIDTH-1010, WIDTH-1010, WIDTH-1010"
+        )
 
 
 class TestWorkExperienceTemplate:

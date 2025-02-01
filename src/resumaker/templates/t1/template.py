@@ -153,18 +153,23 @@ class SkillsTemplate(ResumeSectionTemplate):
         )
         return all_skills
 
-    def format_skills_list(self, skills_list: list) -> str:
-        count = len(skills_list)
-        curr_line_width = -2
-        line_breaked_skills = []
-        for skill in skills_list:
-            if curr_line_width + len(skill) > 100:
-                line_breaked_skills.append("\\\\ &")
-                curr_line_width = -2
-            line_breaked_skills.append(skill)
-            curr_line_width += len(skill) + 2
-        print(line_breaked_skills)
-        return ", ".join(line_breaked_skills)
+    def format_skills_list(self, skills: list) -> str:
+        line_width = -2
+        lines = []
+        line = []
+        
+        for skill in skills:
+            if line_width + len(skill) > 100:
+                lines.append(line[:])
+                line = []
+                line_width = -2
+            line.append(skill)
+            line_width += len(skill) + 2
+            
+        lines.append(line)
+        lines = list(map(lambda x: ', '.join(x), lines))
+        result =  " \\\\ &\n".join(lines)
+        return result
 
 
 class WorkExperienceTemplate(ResumeSectionTemplate):
