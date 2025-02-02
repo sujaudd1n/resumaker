@@ -22,8 +22,8 @@ def render_yaml_txt(yaml_txt):
     "Render and return yaml_txt"
     try:
         return yaml.safe_load(yaml_txt)
-    except:
-        sys.exit("Coult not parse yaml")
+    except Exception as exc:
+        sys.exit("Coult not parse yaml" + str(exc))
 
 
 def is_resume_valid(resume_obj):

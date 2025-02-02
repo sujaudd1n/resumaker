@@ -1,89 +1,127 @@
-# common fields 
-
+# Common fields
 name: Test User
-location: Somewhere, India
+location: Fake City, India 
 
 contact:
-  email: mail@example.com
-  phone: +91 999999999
-  linkedin: https://linkedin.com/in/sujaudd1n
-  github: https://github.com/sujaudd1n
+  email: test.user@example.com 
+  phone: +91 12345 67890 # make sure to include country code
+  linkedin: sujaudd1n # only username
+  github: sujaudd1n # only username
 
 education:
-  - name: ABC college
-    duration: 2021 - 2025
-    degree: XYZ Degree
+  - name: XYZ University
+    location: ABC City, India
+    duration: 2010 - 2014
+    degree: Bachelor of Technology in Computer Science
+    achievements:
+      - 'GPA: 3.5/10 (I was going for 9, but pizza happened)' # in '' because in yml you have to escape :
+      - University Topper in going late
+      - Published Research Paper which 12 people have read, including me
+
+  - name: PQR Institute
+    location: DEF City, India
+    duration: 2014 - 2016
+    degree: Master of Technology in Artificial Intelligence
+    achievements:
+      - Research Assistant
+      - Filed Patent, Now I Just Need to Remember What It Was For
 
 links:
-  algorithms: [leetcode.com/sujaudd1n]
-  open-source: [github.com/sujaudd1n]
-  blog: [sujauddin.me/articles]
-
+  algorithms:
+    - name: Leetcode
+      url: https://leetcode.com/sujaudd1n
+      url_text: leetcode.com/sujaudd1n
+  open-source:
+    - name: Github
+      url: https://github.com/sujaudd1n
+      url_text: github.com/sujaudd1n
 
 swe:
   summary:
-    title: Junior Software Engineer
-    text: hello world
+    title: Senior Software Engineer
+    text: >
+      Meet the software engineer who learned the value of TDD from a very special teacher:
+      Murphy's Law. After a memorable SaaS meltdown in production, I learned to test before
+      I deploy. Now, my code works, and my blood pressure thanks me.
 
   skills:
-    languages: [Python, JS]
-    libraries: [Django, NextJS]
-    databases: [SQLite, MongoDB]
-
+    languages: [Go, Come, Python, C++]
+    libraries: [Jango, Reaction]
+    databases: [OurSQL, PostgreSQL, MangoDB]
+  
   work_experience:
-    - comapny_name: Company Y
-      postion: Python Intern
-      duration: Oct 2024 - Jan 2025
+    - company-name: ABC Corporation
+      location: Fake City, India
+      role: Software Engineer
+      duration: 2016 - 2018
       contributions:
-        - contribution 1
-        - contribution 2
-        - contribution 3
-    - comapny-name: Company Z
-      postion: Y Intern
-      duration: Oct 2024 - Jan 2025
+        - Developed a machine learning model for image classification for cat and not-cat
+        - Improved search engine performance by 2.18\%
+        - Collaborated on a new feature launch
+    - company-name: DEF Startups
+      location: ABC City, India
+      role: Software Engineer
+      duration: 2018 - 2020
       contributions:
-        - contribution 1
-        - contribution 2
-        - contribution 3
+        - Built a real-time analytics dashboard to watching numbers move in real-time
+        - Enhanced payment gateway reliability from "it usually works" to "it almost always works"
+        - Launched a new feature with the team in one night and most of tests failed in the morning
 
   projects:
-    - name: Project 1
-      techstack: [Django, REST API]
+    - name: Project Alpha
+      techstack: [Python, Django, MySQL]
       details:
-        - Detail 1
-        - Detail 2
-        - Detail 3
-  
+        - Developed a web application for e-commerce where you can buy things
+        - Implemented a secure payment gateway...yes, your money is safe, ig
+        - Deployed on a cloud platform aka rented computers
+
+    - name: Project Beta
+      techstack: [Java, Spring, MongoDB]
+      details:
+        - Created a mobile app for social media because the world needed another one, right?
+        - Designed a functional chatbot 
+        - Successfully deployed on a cloud platform 
+
 machine_learning:
   summary:
-    title: Junior Machine Learning Engineer
-    text: hello world
+    title: Senior Machine Learning Engineer
+    text: Making computers solve complex problems, one model at a time. Currently, they're smarter than me, but that's not saying much.
 
   skills:
-    languages: [Python, JS]
-    libraries: [Django, NextJS]
-    databases: [SQLite, MongoDB]
+    languages: [Python, R, Julia, thinking about learning lisp to feel better]
+    libraries: [TensorFlow, PyTorch, scikit-learn]
+    databases: [MySQL, PostgreSQL, MongoDB]
+  
+  work_experience:
+    - company-name: GHI Research
+      role: Machine Learning Engineer
+      duration: 2020 - 2022
+      location: Fake City, India
+      contributions:
+        - Developed an NLP model with high accuracy
+        - Launched a new product with the research team
+        - Improved computer vision model performance, now it can see me coming... to the fridge
 
-  work-experience:
-    - comapny-name: Company Y
-      postion: Python Intern
-      duration: Oct 2024 - Jan 2025
+    - company-name: JKL Labs
+      role: Machine Learning Engineer
+      duration: 2018 - 2020
+      location: ABC City, India
       contributions:
-        - contribution 1
-        - contribution 2
-        - contribution 3
-    - comapny-name: Company Z
-      postion: JS Intern
-      duration: Oct 2024 - Jan 2025
-      contributions:
-        - contribution 1
-        - contribution 2
-        - contribution 3
+        - Built a recommender system with strong results
+        - Successfully built something.
+        - Enhanced some models, and now they perform their job better than before
 
   projects:
-    - name: Project 1
-      techstack: [Django, REST API]
+    - name: Project Gamma
+      techstack: [Python, PyTorch, MongoDB]
       details:
-        - Detail 1
-        - Detail 2
-        - Detail 3
+        - Developed a time series forecasting model
+        - Deployed on a cloud platform with high uptime
+        - Achieved 90\% accuracy, on a good day, with the wind in my favor
+
+    - name: Project Delta
+      techstack: [R, TensorFlow, MySQL]
+      details:
+        - Created a clustering analysis model for categorizing my mental health.
+        - Deployed on a cloud platform with good performance, no complaints so far
+        - Reached 85\% accuracy, close enough, right? Right?!

@@ -157,7 +157,7 @@ class SkillsTemplate(ResumeSectionTemplate):
         line_width = -2
         lines = []
         line = []
-        
+
         for skill in skills:
             if line_width + len(skill) > 100:
                 lines.append(line[:])
@@ -165,10 +165,10 @@ class SkillsTemplate(ResumeSectionTemplate):
                 line_width = -2
             line.append(skill)
             line_width += len(skill) + 2
-            
+
         lines.append(line)
-        lines = list(map(lambda x: ', '.join(x), lines))
-        result =  " \\\\ &\n".join(lines)
+        lines = list(map(lambda x: ", ".join(x), lines))
+        result = " \\\\ &\n".join(lines)
         return result
 
 
