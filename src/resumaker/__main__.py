@@ -1,8 +1,9 @@
 import argparse
 import json
+import sys
 
 from resumaker.config import config
-from resumaker.utils import is_resume_valid, common_fields
+from resumaker.utils import is_resume_obj_valid, common_fields
 from resumaker.render_resume import *
 from resumaker.templates.t1.resume import Resume
 from resumaker.templates.t1.template import ResumeTemplate
@@ -17,18 +18,16 @@ def main():
     resume_filenames = get_resume_filenames(args.filenames)
 
     # check if files exist
-    result, errors = get_resume_obj(resume_filenames)
-    if result:
-        complete_resume_obj = result
-    else:
+    complete_resume_obj, filename, errors = get_resume_obj(resume_filenames)
+    if errors:
         for error in errors:
             print(error)
-        sys.exit(f"Could not render {resume_filenames} into valid resume object!")
+        sys.exit(1)
 
-    # check validity (schema) of resume
-    is_valid, msg = is_resume_valid(complete_resume_obj)
+    # check validity (schema) of resume common fields
+    is_valid, err_msg = is_resume_obj_valid(complete_resume_obj, filename)
     if not is_valid:
-        sys.exit(msg)
+        sys.exit(err_msg)
 
     common_sections = {
         "name": complete_resume_obj.get("name"),

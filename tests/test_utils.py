@@ -58,11 +58,11 @@ class TestIsConfigValid:
 
 class TestIsResumeValid:
     def test_when_dict(self, mocker):
-        result = is_resume_valid({})
-        assert result == (True, None)
+        result = is_resume_obj_valid({}, "resume.yml")
+        assert result == (False, "name does not exist in resume.yml")
 
-    def test_when_fields_value_valid(self, mocker):
-        result = is_resume_valid(
+    def test_when_some_fields_absent(self, mocker):
+        result = is_resume_obj_valid(
             {
                 "name": "test-user",
                 "location": "location-y",
@@ -70,18 +70,53 @@ class TestIsResumeValid:
                 "education": [
                     {"name": "clg-1", "duration": "2222 - 3333", "degree": "deg360"}
                 ],
-            }
+            },
+            "resume.yml",
         )
-        assert result == (True, None)
+        assert result == (False, "links does not exist in resume.yml")
 
-    def test_when_fields_value_invalid(self, mocker):
-        result = is_resume_valid(
+
+class TestCommonSectionContact:
+    def test_valid(self):
+        contact = {"name": "first last"}
+        res = is_resume_contact_valid(contact)
+        assert res == (True, None)
+
+    def test_invalid(self):
+        contact = {"name": ["first"]}
+        with pytest.raises(AssertionError) as excinfo:
+            res = is_resume_contact_valid(contact)
+            assert excinfo.value == (False, "Value of contct.name should be a str")
+    
+    def test_invalid_key(self):
+        contact = {"key": ["first"]}
+        with pytest.raises(AssertionError) as excinfo:
+            res = is_resume_contact_valid(contact)
+            assert excinfo.value == (False, "key is not valid")
+
+
+class TestCommonSectionEducation:
+    def test_valid(self):
+        education = [
             {
-                "name": "test-user",
-                "location": ["location-list"],
-                "contact": "9999999",
-                "education": "clg-2",
+                "name": "clg",
+                "location": "l",
+                "duration": "x - y",
+                "degree": "degA",
+                "achievements": ["a1", "a2"],
             }
-        )
-        assert result[0] == False
-        assert isinstance(result[1], str)
+        ]
+        res = is_resume_education_valid(education)
+        assert res == (True, None)
+
+        def test_invalid(self):
+
+            education = [{
+            'name': 'clg',
+            'location': 'l',
+            'duration': 'x - y',
+            'degree': "degA",
+            'achievements': ['a1', 'a2']
+        }]
+        res = is_resume_education_valid(education)
+        assert res == (True, None)

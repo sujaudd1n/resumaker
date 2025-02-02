@@ -18,23 +18,22 @@ class TestGetResumeObj:
         patch1 = mocker.patch("resumaker.render_resume.read_file_txt")
         patch1.side_effect = FileNotFoundError
 
-        result, error = get_resume_obj(create_file)
+        result, filename, error = get_resume_obj(create_file)
         assert result is None
         assert error is not None
+        assert filename == None
         assert error[0] == "file1.yml is not found!"
 
     @pytest.mark.fixture_data(["file1.yml"])
     def test_filenames_exists_but_invalid(self, mocker, create_file):
         patch1 = mocker.patch("resumaker.render_resume.read_file_txt")
-        patch1.return_value = "yaml_text"
+        patch1.return_value = "%sk lsdjf ls"
 
         patch1 = mocker.patch("resumaker.render_resume.render_yaml_txt")
-        patch1.return_value = "yaml_text"
+        patch1.side_effect = SystemExit
 
-        result, error = get_resume_obj(create_file)
-        assert result is None
-        assert error is not None
-        assert error[0] == "file1.yml is not valid!"
+        with pytest.raises(SystemExit):
+            result,filename, error = get_resume_obj(create_file)
 
     @pytest.mark.fixture_data(["file1.yml"])
     def test_filenames_exists_and_valid(self, mocker, create_file):
@@ -44,7 +43,8 @@ class TestGetResumeObj:
         patch1 = mocker.patch("resumaker.render_resume.render_yaml_txt")
         patch1.return_value = {"key": "val"}
 
-        result, error = get_resume_obj(create_file)
+        result, filename,  error = get_resume_obj(create_file)
         assert result is not None
         assert error is None
+        assert filename == "file1.yml"
         assert result == {"key": "val"}

@@ -23,20 +23,58 @@ def render_yaml_txt(yaml_txt):
     try:
         return yaml.safe_load(yaml_txt)
     except Exception as exc:
-        sys.exit("Coult not parse yaml" + str(exc))
+        sys.exit("Error: Coult not parse yaml: " + str(exc))
 
 
-def is_resume_valid(resume_obj):
+def is_resume_obj_valid(resume_obj, filename):
+    def check(field, dtype, dtype_msg):
+        assert resume_obj.get(field), f"{field} does not exist in {filename}"
+        assert isinstance(
+            resume_obj.get(field), dtype
+        ), f"{field} should be {dtype_msg}"
+
     try:
-        assert isinstance(resume_obj, dict), "Resume should be a dictionary"
-        # check each common-field's type is valid if present
-        for field, dtype in common_fields.items():
-            if field in resume_obj:
-                assert isinstance(
-                    resume_obj[field], dtype
-                ), f"{field} should be a {dtype}"
+        assert isinstance(resume_obj, dict), f"{filename} should be key-value pair"
+
+        check("name", str, "a str")
+        check("contact", dict, "a dictionary")
+        check("education", list, "a list of dictionary")
+        check("links", dict, "a dictionary")
+
+        is_resume_contact_valid(resume_obj.get("contact"))
+        is_resume_education_valid(resume_obj.get("education"))
+
     except AssertionError as exc:
         return False, str(exc)
+    else:
+        return True, None
+
+
+def is_resume_contact_valid(contact):
+    valid_keys = ["email", "phone", "linkedin", "github"]
+    for key, val in contact.items():
+        assert key in valid_keys, f"{key} is not valid for contact"
+        assert type(val) == str, f"Value of contact.{key} should be a str"
+    return True, None
+
+
+def is_resume_education_valid(education_list):
+    for education in education_list:
+        assert type(education) == dict, "Education entry should be a dictionary"
+        for key, val in education.items():
+            if key == "achievements":
+                assert (
+                    type(education[key]) == list
+                ), f"Value of education.<entry>.{key} should be a list"
+                for achievement in education[key]:
+                    print(achievement)
+                    assert (
+                        type(achievement) == str
+                    ), f"Value of education.<entry>.{key}.<item> should be a str"
+            else:
+                assert (
+                    type(val) == str
+                ), f"Value of education.<entry>.{key} should be a str"
     return True, None
 
 

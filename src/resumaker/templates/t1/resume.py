@@ -1,3 +1,4 @@
+import sys
 import subprocess
 import os
 import shutil
@@ -51,9 +52,13 @@ class Resume:
 
         internal_sections = []
         for section in self.internal_sections:
-            tex = getattr(self, section).generate_tex(
+            try:
+                tex = getattr(self, section).generate_tex(
                 self.template, self.values[section]
             )
+            except:
+                sys.exit(f"{section} is not valid for template.")
+            
             internal_sections.append(tex)
 
         internal_tex_template = Template(template["main"])
