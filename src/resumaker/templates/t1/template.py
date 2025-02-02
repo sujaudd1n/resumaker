@@ -52,7 +52,6 @@ class ResumeSectionTemplate:
 
 class ContactTemplate(ResumeSectionTemplate):
     def render_tex(self):
-        print(self.values)
         pyTemplate = Template(self.template)
         result = pyTemplate.substitute(
             name=self.values["name"],

@@ -52,7 +52,6 @@ def main():
 
 
 def build_name(target):
-    print(target["target_name"])
     user_name = target["name"].replace(" ", "").lower()
     target_name = target["target_name"]
     return f"{user_name}-{target_name}"
