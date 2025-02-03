@@ -51,7 +51,7 @@ def is_resume_obj_valid(resume_obj, filename):
 
 
 def is_resume_contact_valid(contact):
-    valid_keys = ["email", "phone", "linkedin", "github"]
+    valid_keys = ["name", "location", "email", "phone", "linkedin", "github"]
     for key, val in contact.items():
         assert key in valid_keys, f"{key} is not valid for contact"
         assert type(val) == str, f"Value of contact.{key} should be a str"

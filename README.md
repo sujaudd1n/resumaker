@@ -1,43 +1,28 @@
-# Resumaker
+![resumaker image](./extra/resumaker.png)
 
-[![PyPI - Version](https://img.shields.io/pypi/v/resumaker.svg)](https://pypi.org/project/resumaker)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/resumaker.svg)](https://pypi.org/project/resumaker)
+
+[![PyPI -
+Version](https://img.shields.io/pypi/v/resumaker.svg)](https://pypi.org/project/resumaker)
+[![PyPI - Python
+Version](https://img.shields.io/pypi/pyversions/resumaker.svg)](https://pypi.org/project/resumaker)
 
 -----
+# Resumaker
 
-Resumaker helps you to build ATS-friendly, professinally formatteed multiple and multi-targeted
-resume from a single YAML file. Write down all the details and leave formatting, structuring
-to resumaker.
+Resumaker is a tool that creates ATS-friendly, professionally formatted,
+multiple, and multi-targeted resumes from a single YAML file. Write down all the
+details and let Resumaker handle the formatting and structuring.
 
-See [example](#example).
+Let's assume you know Python and JS, and you're applying to two different
+companies for two different roles. You'll need to have a different resume for
+each option. It can be counterproductive to manually write LaTeX code or use an
+office suite like Word or LibreOffice Writer to write your resume. Instead,
+write all the information in a YAML file, and Resumaker will create six resumes
+for you, nicely formatted and ATS-friendly.
+
+See [quickstart](#quickstart).
 
 ## Installation
-
-### Requirements
-
-You need to have `pdflatex` installed on your system. Please check your
-distro's docs on how to install `pdflatex`. For Fedora and Ubuntu check out the
-following docs:
-
-- Ubuntu: <https://gist.github.com/rain1024/98dd5e2c6c8c28f9ea9d>
-- Fedora: <https://docs.fedoraproject.org/en-US/neurofedora/latex/>
-
-If you use other distro, please search with package manager and consider
-contrubuting by adding the package name here.
-
-You also need the following tex packages.
-
-- parskip
-- array
-- ifthen
-- graphicx
-- ebgaramond
-- hyperref
-
-Again, please read the docs of your distro, search with your package manager on how
-how to install these packages.
-
-###
 
 Install `resumaker` with pip.
 
@@ -45,21 +30,63 @@ Install `resumaker` with pip.
 pip install resumaker
 ```
 
+### Requirements
+
+`pdflatex`
+
+You also need the following TeX packages:
+
+- `parskip`
+- `array`
+- `ifthen`
+- `graphicx`
+- `ebgaramond`
+- `hyperref`
+
+For [Fedora](https://docs.fedoraproject.org/en-US/neurofedora/latex/), run:
+
+```console
+sudo dnf install texlive-scheme-medium texlive-parskip texlive-ebgaramond
+```
+
+For Ubuntu, read the
+[gist](https://gist.github.com/rain1024/98dd5e2c6c8c28f9ea9d).
+
+If you face any package issues, please download the package for your system and
+create a pull request to include the package name above. If you use another
+distribution, please search with your package manager and consider contributing
+by adding the package name to the list above.
+
 ## Quickstart
 
-This is a sample YAML file from which two resumes will be build. Each
-resume should have common sections: name, location, contact, education,
-links.
+You need a YAML file to write the details. This file can be categorized into two
+parts:
 
-After that, the file contains target, that is, resume specific to a 
-particaular job role, company, or anything you like.
+### Common Part
 
-It should contain:
+The fields are common to all resumes:
+
+- name
+- location
+- contact
+- education
+- links
+
+### Targeted Part
+
+This will be different for each resume:
 
 - summary
 - skills
-- work_experience
+- work experience
 - projects
+
+From the following `resume.yml`, two PDFs will be created: `testuser-swe.pdf`
+and `testuser-machine_learning.pdf` by running:
+
+```shell
+resumaker -f resume.yml
+```
 
 ```yml
 # common fields
@@ -189,13 +216,34 @@ machine_learning:
         - Created a clustering analysis model for categorizing my mental health.
         - Deployed on a cloud platform with good performance, no complaints so far
         - Reached 85\% accuracy, close enough, right? Right?!
+# these are mostly fake data
 ```
 
-From this file, two resume will be generated, one for `swe` and one for `machine_learning`.
-Check out the generated pdfs: [swe], [machine_learning].
+Note: You need to escape `%`, `:` among other things.
 
+## Configuration
 
+Here is the text with corrected grammar:
+
+This is a pre-release, so minimal configurations are provided.
+
+Configs should be in a file called `config.yml` and it should be a dictionary.
+
+Valid keys:
+
+- `RESUME_FILENAME`: The default filename to look for if you run `resumaker`
+  with no options.
+- `ORDER`: The ordering of resume sections.
+
+Sample config.yml:
+
+```yml
+RESUME_FILENAME: [my-resume.yml]
+ORDER : [summary, skills, education, work_experience, projects, links]
+
+```
 
 ## License
 
-`resumaker` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`resumaker` is distributed under the terms of the
+[MIT](https://spdx.org/licenses/MIT.html) license.
