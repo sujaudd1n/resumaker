@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "resumaker"
 dynamic = ["version"]
-description = 'Resumaker is a powerful and efficient tool designed to streamline the resume creation process for professionals. By leveraging a single YAML file, Resumaker generates multiple, professionally formatted, and ATS-friendly resumes tailored to different job applications. This innovative solution eliminates the need for manual formatting and structuring, allowing you to focus on the content and details of your resume.'
+description =  "Effortlessly create multiple, ATS-friendly resumes from a single YAML file with Resumaker."
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"

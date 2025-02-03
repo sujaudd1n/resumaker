@@ -67,7 +67,6 @@ def is_resume_education_valid(education_list):
                     type(education[key]) == list
                 ), f"Value of education.<entry>.{key} should be a list"
                 for achievement in education[key]:
-                    print(achievement)
                     assert (
                         type(achievement) == str
                     ), f"Value of education.<entry>.{key}.<item> should be a str"
