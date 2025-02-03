@@ -22,6 +22,14 @@ for you, nicely formatted and ATS-friendly.
 
 See [quickstart](#quickstart).
 
+## Disclaimer
+
+This is a pre-release version and the current template is intended for software
+engineers and  has the following fields:
+
+- Name, Location, Professional Summary, Education, Skills, Work Experience,
+  Projects, and Links.
+
 ## Installation
 
 Install `resumaker` with pip.
@@ -32,16 +40,11 @@ pip install resumaker
 
 ### Requirements
 
-`pdflatex`
+- `pdflatex`
 
 You also need the following TeX packages:
 
-- `parskip`
-- `array`
-- `ifthen`
-- `graphicx`
-- `ebgaramond`
-- `hyperref`
+- `parskip`, `array`, `ifthen`, `graphicx`, `ebgaramond`, `hyperref`
 
 For [Fedora](https://docs.fedoraproject.org/en-US/neurofedora/latex/), run:
 
@@ -66,23 +69,16 @@ parts:
 
 The fields are common to all resumes:
 
-- name
-- location
-- contact
-- education
-- links
+- name, location, contact, education, links
 
 ### Targeted Part
 
 This will be different for each resume:
 
-- summary
-- skills
-- work experience
-- projects
+- summary, skills, work experience, projects
 
-From the following `resume.yml`, two PDFs will be created: `testuser-swe.pdf`
-and `testuser-machine_learning.pdf` by running:
+From the following `resume.yml`, two PDFs will be created: [testuser-swe.pdf](./extra/testuser-swe.pdf)
+and [testuser-machine_learning.pdf](./extra/testuser-machine_learning.pdf) by running:
 
 ```shell
 resumaker -f resume.yml
