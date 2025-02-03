@@ -3,6 +3,7 @@ dist
 .coverage
 
 .zed
+.pypirc
 
 # latex generated files
 *.log
