@@ -215,7 +215,8 @@ machine_learning:
 # these are mostly fake data
 ```
 
-Note: You need to escape `%`, `:` among other things.
+Note: You need to escape `%`, `:`, `$` among other things as these have
+special meaning in YAML, Tex.
 
 ## Configuration
 

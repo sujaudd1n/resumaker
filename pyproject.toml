@@ -5,16 +5,15 @@ build-backend = "hatchling.build"
 [project]
 name = "resumaker"
 dynamic = ["version"]
-description = ''
+description = 'Resumaker is a powerful and efficient tool designed to streamline the resume creation process for professionals. By leveraging a single YAML file, Resumaker generates multiple, professionally formatted, and ATS-friendly resumes tailored to different job applications. This innovative solution eliminates the need for manual formatting and structuring, allowing you to focus on the content and details of your resume.'
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-keywords = []
+keywords = ["Resume", "Resume Maker", "Resumaker"]
 authors = [
-  { name = "Sujauddin", email = "61101752+sujaudd1n@users.noreply.github.com" },
+  { name = "Md Sujauddin Sekh" }
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -23,17 +22,20 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
+  "Topic :: Text Processing :: Markup :: LaTeX",
+  "Environment :: Console",
 ]
-dependencies = []
+dependencies = [
+  "PyYAML==6.0.2"
+]
 
 [project.urls]
-Documentation = "https://github.com/Sujauddin/resumaker#readme"
-Issues = "https://github.com/Sujauddin/resumaker/issues"
-Source = "https://github.com/Sujauddin/resumaker"
+Documentation = "https://github.com/sujaudd1n/resumaker"
+Issues = "https://github.com/sujaudd1n/resumaker/issues"
+Source = "https://github.com/sujaudd1n/resumaker"
 
 [project.scrips]
-resumaker = "resumaker:__main__"
-
+resumaker = "resumaker.__main__:main"
 
 
 [tool.hatch.version]

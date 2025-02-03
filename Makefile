@@ -1,4 +1,5 @@
 build:
+	rm -rf dist/*
 	hatch build
 install:
 	pip install --force-reinstall dist/resumaker*.whl

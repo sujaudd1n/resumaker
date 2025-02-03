@@ -1,4 +1,4 @@
-# Common fields
+# common fields
 name: Test User
 location: Fake City, India 
 
@@ -125,3 +125,4 @@ machine_learning:
         - Created a clustering analysis model for categorizing my mental health.
         - Deployed on a cloud platform with good performance, no complaints so far
         - Reached 85\% accuracy, close enough, right? Right?!
+# these are mostly fake data
