@@ -220,8 +220,6 @@ special meaning in YAML, Tex.
 
 ## Configuration
 
-Here is the text with corrected grammar:
-
 This is a pre-release, so minimal configurations are provided.
 
 Configs should be in a file called `config.yml` and it should be a dictionary.
