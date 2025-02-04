@@ -88,8 +88,8 @@ class Resume:
         os.chdir(new_cwd)
 
         return_code = subprocess.run(
-            ["pdflatex", "-interaction=batchmode", tex_filename]
-            # ["pdflatex", tex_filename]
+            # ["pdflatex", "-interaction=batchmode", tex_filename]
+            ["pdflatex", tex_filename]
         )
 
         pdf_filename = f"{filename}.pdf"

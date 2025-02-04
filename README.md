@@ -49,11 +49,14 @@ You also need the following TeX packages:
 For [Fedora](https://docs.fedoraproject.org/en-US/neurofedora/latex/), run:
 
 ```console
-sudo dnf install texlive-scheme-medium texlive-parskip texlive-ebgaramond
+sudo dnf install texlive-scheme-basic texlive-parskip texlive-ebgaramond
 ```
 
-For Ubuntu, read the
-[gist](https://gist.github.com/rain1024/98dd5e2c6c8c28f9ea9d).
+For [Ubuntu](https://gist.github.com/rain1024/98dd5e2c6c8c28f9ea9d), run:
+
+```console
+sudo apt install texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra 
+```
 
 If you face any package issues, please download the package for your system and
 create a pull request to include the package name above. If you use another
@@ -79,6 +82,9 @@ This will be different for each resume:
 
 From the following `resume.yml`, two PDFs will be created: [testuser-swe.pdf](./extra/testuser-swe.pdf)
 and [testuser-machine_learning.pdf](./extra/testuser-machine_learning.pdf) by running:
+
+Note: You need to escape `%`, `:`, `$` among other things as these have
+special meaning in YAML, Tex.
 
 ```shell
 resumaker -f resume.yml
@@ -214,9 +220,6 @@ machine_learning:
         - Reached 85\% accuracy, close enough, right? Right?!
 # these are mostly fake data
 ```
-
-Note: You need to escape `%`, `:`, `$` among other things as these have
-special meaning in YAML, Tex.
 
 ## Configuration
 
