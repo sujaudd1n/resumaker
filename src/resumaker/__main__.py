@@ -23,7 +23,6 @@ def main():
         for error in errors:
             print(error)
         sys.exit(1)
-    
 
     # check validity (schema) of resume common fields
     is_valid, err_msg = is_resume_obj_valid(complete_resume_obj, filename)

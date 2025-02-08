@@ -33,7 +33,7 @@ class TestGetResumeObj:
         patch1.side_effect = SystemExit
 
         with pytest.raises(SystemExit):
-            result,filename, error = get_resume_obj(create_file)
+            result, filename, error = get_resume_obj(create_file)
 
     @pytest.mark.fixture_data(["file1.yml"])
     def test_filenames_exists_and_valid(self, mocker, create_file):
@@ -43,7 +43,7 @@ class TestGetResumeObj:
         patch1 = mocker.patch("resumaker.render_resume.render_yaml_txt")
         patch1.return_value = {"key": "val"}
 
-        result, filename,  error = get_resume_obj(create_file)
+        result, filename, error = get_resume_obj(create_file)
         assert result is not None
         assert error is None
         assert filename == "file1.yml"

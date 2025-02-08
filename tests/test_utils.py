@@ -87,7 +87,7 @@ class TestCommonSectionContact:
         with pytest.raises(AssertionError) as excinfo:
             res = is_resume_contact_valid(contact)
             assert excinfo.value == (False, "Value of contct.name should be a str")
-    
+
     def test_invalid_key(self):
         contact = {"key": ["first"]}
         with pytest.raises(AssertionError) as excinfo:
@@ -111,12 +111,15 @@ class TestCommonSectionEducation:
 
         def test_invalid(self):
 
-            education = [{
-            'name': 'clg',
-            'location': 'l',
-            'duration': 'x - y',
-            'degree': "degA",
-            'achievements': ['a1', 'a2']
-        }]
+            education = [
+                {
+                    "name": "clg",
+                    "location": "l",
+                    "duration": "x - y",
+                    "degree": "degA",
+                    "achievements": ["a1", "a2"],
+                }
+            ]
+
         res = is_resume_education_valid(education)
         assert res == (True, None)

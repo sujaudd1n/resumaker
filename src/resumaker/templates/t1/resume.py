@@ -54,11 +54,11 @@ class Resume:
         for section in self.internal_sections:
             try:
                 tex = getattr(self, section).generate_tex(
-                self.template, self.values[section]
-            )
+                    self.template, self.values[section]
+                )
             except:
                 sys.exit(f"{section} is not valid for template.")
-            
+
             internal_sections.append(tex)
 
         internal_tex_template = Template(template["main"])

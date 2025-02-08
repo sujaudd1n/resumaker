@@ -7,7 +7,7 @@ name = "resumaker"
 dynamic = ["version"]
 description =  "Effortlessly create multiple, ATS-friendly resumes from a single YAML file with Resumaker."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = "MIT"
 keywords = ["Resume", "Resume Maker", "Resumaker"]
 authors = [
@@ -15,9 +15,6 @@ authors = [
 ]
 classifiers = [
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -39,7 +36,6 @@ Source = "https://github.com/sujaudd1n/resumaker"
 [project.scripts]
 resumaker = "resumaker.__main__:main"
 
-
 [tool.hatch.version]
 path = "src/resumaker/__about__.py"
 
@@ -50,24 +46,7 @@ extra-dependencies = [
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/resumaker tests}"
 
-[tool.coverage.run]
-source_pkgs = ["resumaker", "tests"]
-branch = true
-parallel = true
-omit = [
-  "src/resumaker/__about__.py",
-]
 
-[tool.coverage.paths]
-resumaker = ["src/resumaker", "*/resumaker/src/resumaker"]
-tests = ["tests", "*/resumaker/tests"]
-
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
 [tool.pytest.ini_options]
 markers = [
   "fixture_data",

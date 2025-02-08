@@ -11,3 +11,7 @@ dist
 *.out
 *.tex
 
+*.notrack
+*.swp
+.tox
+
