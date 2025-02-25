@@ -43,7 +43,7 @@ class Resume:
         ]
 
         # self.internal_sections = [self.summary, self.education, self.skills, self.links]
-        self.internal_sections = order if order else ORDER
+        self.internal_sections = values["order"] if values.get("order") else order if order else ORDER
 
     def generate_tex(self):
         all_sections = []
