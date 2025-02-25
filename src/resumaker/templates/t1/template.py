@@ -211,11 +211,13 @@ class ProjectTemplate(ResumeSectionTemplate):
     def render_tex(self):
         complete_template = Template(self.template["complete"])
         single_template = Template(self.template["single"])
+        single_template_with_link = Template(self.template["single-with-link"])
         detail_template = Template(self.template["single-detail"])
 
         rendered_single = []
         for project in self.values:
             project_name = project["name"]
+            project_link = project.get("link")
             techstack = ", ".join(project["techstack"])
 
             rendered_details = []
@@ -225,6 +227,11 @@ class ProjectTemplate(ResumeSectionTemplate):
             rendered_single.append(
                 single_template.substitute(
                     project_name=project_name,
+                    techstack=techstack,
+                    all_details="\n" + "\n".join(rendered_details),
+                ) if not project_link else single_template_with_link.substitute(
+                    project_name=project_name,
+                    project_link=project_link,
                     techstack=techstack,
                     all_details="\n" + "\n".join(rendered_details),
                 )

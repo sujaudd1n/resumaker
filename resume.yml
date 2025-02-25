@@ -69,6 +69,7 @@ swe:
 
   projects:
     - name: Project Alpha
+      link: https://example.com/project
       techstack: [Python, Django, MySQL]
       details:
         - Developed a web application for e-commerce where you can buy things

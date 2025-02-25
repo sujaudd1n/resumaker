@@ -57,7 +57,7 @@ class Resume:
                     self.template, self.values[section]
                 )
             except:
-                sys.exit(f"{section} is not valid for template.")
+                sys.exit(f"Section {section} is not valid in template.")
 
             internal_sections.append(tex)
 

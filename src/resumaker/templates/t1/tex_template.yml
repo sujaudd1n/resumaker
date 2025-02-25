@@ -99,4 +99,8 @@ projects:
     \begin{rSubsection}{$project_name}{$techstack}{}{}
       $all_details
     \end{rSubsection}
+  single-with-link: |
+    \begin{rSubsection}{\href{$project_link}{$project_name}}{$techstack}{}{}
+      $all_details
+    \end{rSubsection}
   single-detail: \item $detail

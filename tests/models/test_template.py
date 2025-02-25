@@ -206,18 +206,20 @@ class TestProjectTemplate:
         values = [
             {
                 "name": "P1",
+                "link": "https://example.com/p1",
                 "techstack": ["T1", "T2", "T3"],
                 "details": ["D1", "D2", "D3"],
             },
             {
                 "name": "P2",
+                "link": "https://example.com/p2",
                 "techstack": ["T1", "T2", "T3"],
                 "details": ["D1", "D2", "D3"],
             },
         ]
         template = {
             "complete": "$all_projects",
-            "single": "$project_name $techstack $all_details",
+            "single": "$project_name $project_link $techstack $all_details",
             "single-detail": "$detail",
         }
 
@@ -226,4 +228,7 @@ class TestProjectTemplate:
 
     def test_render_tex(self, project_obj):
         tex = project_obj.render_tex()
-        assert tex == ("P1 T1, T2, T3 \nD1\nD2\nD3\n" "P2 T1, T2, T3 \nD1\nD2\nD3")
+        assert tex == (
+            "P1 https://example.com/p1 T1, T2, T3 \nD1\nD2\nD3\n"
+            "P2 https://example.com/p2 T1, T2, T3 \nD1\nD2\nD3"
+        )

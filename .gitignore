@@ -5,6 +5,8 @@ dist
 .zed
 .pypirc
 
+*pdf
+
 # latex generated files
 *.log
 *.aux
